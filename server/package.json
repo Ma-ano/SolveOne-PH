@@ -16,7 +16,8 @@
     "db:index:safety": "node src/jobs/createSafetyIndexes.js",
     "db:index:discovery": "node src/jobs/createDiscoveryIndexes.js",
     "db:index:giveaways": "node src/jobs/createGiveawayIndexes.js",
-    "db:index:missions": "node src/jobs/createMissionIndexes.js"
+    "db:index:missions": "node src/jobs/createMissionIndexes.js",
+    "db:index:privacy": "node src/jobs/createPrivacyRequestIndexes.js"
   },
   "keywords": [],
   "author": "",

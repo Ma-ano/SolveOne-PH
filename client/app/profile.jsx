@@ -183,6 +183,14 @@ export default function ProfileScreen() {
               <Text className="font-bold text-coral">Close account</Text>
             </Pressable>
           </Link>
+          <Link href="/privacy-requests" asChild>
+            <Pressable
+              accessibilityRole="link"
+              className="min-h-12 justify-center rounded-xl border border-leaf px-4"
+            >
+              <Text className="font-bold text-leaf">Privacy requests</Text>
+            </Pressable>
+          </Link>
           {["moderator", "admin"].includes(user.role) ? (
             <>
               <Link href="/admin/reports" asChild>
@@ -216,6 +224,18 @@ export default function ProfileScreen() {
                 </Pressable>
               </Link>
             </>
+          ) : null}
+          {user.role === "admin" ? (
+            <Link href="/admin/privacy-requests" asChild>
+              <Pressable
+                accessibilityRole="link"
+                className="min-h-12 justify-center rounded-xl border border-coral px-4"
+              >
+                <Text className="font-bold text-coral">
+                  Privacy request operations
+                </Text>
+              </Pressable>
+            </Link>
           ) : null}
         </View>
 

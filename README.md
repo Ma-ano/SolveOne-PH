@@ -6,7 +6,7 @@ SolveOne PH connects people who have small, concrete problems with people who ca
 
 ## Current phase
 
-Phases 0 through 15 are implemented, and production-readiness hardening is underway. The repository now includes a versioned self-service account-closure workflow alongside optional, disabled-by-default AI request structuring, human-reviewed community missions, free-item handoffs, advanced discovery, private safety workflows, disabled-by-default platform donations, optional private identity review, and the established help-request workflow. Identity collection, live donation checkout, and AI assistance remain disabled pending their separate deployment approvals; the production gate still has external and product blockers.
+Phases 0 through 16 are implemented, and production-readiness hardening is underway. The repository now includes an authenticated, audited privacy-rights case workflow and a collection-level retention approval draft alongside the versioned self-service account-closure workflow, optional disabled-by-default AI request structuring, human-reviewed community missions, free-item handoffs, advanced discovery, private safety workflows, disabled-by-default platform donations, optional private identity review, and the established help-request workflow. Identity collection, live donation checkout, and AI assistance remain disabled pending their separate deployment approvals; the production gate still has external and product blockers.
 
 | Phase                     | Status      | Scope                                                                                                           |
 | ------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------- |
@@ -26,6 +26,7 @@ Phases 0 through 15 are implemented, and production-readiness hardening is under
 | 13 — Free items           | Implemented | Free listings, exact-category need matching, atomic reservations, two-party handoff, and confirmed impact       |
 | 14 — Community missions   | Implemented | Moderated missions, typed resources, explainable volunteer matching, atomic capacity, and confirmed completion  |
 | 15 — AI assistance        | Implemented | Optional sanitized request structuring, validated previews, and explicit user-controlled application            |
+| 16 — Privacy requests     | Implemented | Authenticated rights intake, owner-safe tracking, admin assignment, completion checks, and immutable auditing   |
 | Account closure           | Implemented | Reauthentication, active-commitment gate, profile anonymization, session revocation, and identity-file purge    |
 | Production readiness      | In progress | CI, linting, secret guard, readiness probe, and closure controls implemented; external launch gates remain open |
 
@@ -52,6 +53,8 @@ Read these before implementing a phase:
 - [Phase 13 free items](docs/phase-13-free-items.md)
 - [Phase 14 community missions](docs/phase-14-community-missions.md)
 - [Phase 15 AI assistance](docs/phase-15-ai-assistance.md)
+- [Phase 16 privacy requests](docs/phase-16-privacy-requests.md)
+- [Data retention approval draft](docs/data-retention-schedule.md)
 - [Production readiness gate](docs/production-readiness.md)
 - [Account closure and retention](docs/account-closure-retention.md)
 
@@ -123,7 +126,7 @@ npm run lint
 npm test
 ```
 
-Before enabling identity submissions, platform checkout, Phase 11 safety workflows, Phase 12 discovery, Phase 13 free-item handoffs, or Phase 14 community missions on a production database, an operator must review/backup the relevant collections and run the applicable `npm run db:index:verifications`, `npm run db:index:donations`, `npm run db:index:safety`, `npm run db:index:discovery`, `npm run db:index:giveaways`, and/or `npm run db:index:missions` command against the intended MongoDB deployment. The safety command replaces the exact legacy `report_active_unique` definition with its partial equivalent; the discovery command creates only reviewed help-request indexes; the giveaway command creates listing and reservation indexes; and the mission command creates listing, moderation, matching, contribution, and active-uniqueness indexes. None of these commands was run against a live database during development. Phase 15 has no database migration. Its provider key, explicit model, and independent safety-identifier secret must remain server-side; review provider terms, retention, incident handling, monitoring, and redaction quality before enabling it.
+Before enabling identity submissions, platform checkout, Phase 11 safety workflows, Phase 12 discovery, Phase 13 free-item handoffs, Phase 14 community missions, or Phase 16 privacy-request intake on a production database, an operator must review/backup the relevant collections and run the applicable `npm run db:index:verifications`, `npm run db:index:donations`, `npm run db:index:safety`, `npm run db:index:discovery`, `npm run db:index:giveaways`, `npm run db:index:missions`, and/or `npm run db:index:privacy` command against the intended MongoDB deployment. The safety command replaces the exact legacy `report_active_unique` definition with its partial equivalent; the discovery command creates only reviewed help-request indexes; the giveaway command creates listing and reservation indexes; and the mission and privacy commands create their reviewed workflow and active-uniqueness indexes. None of these commands was run against a live database during development. Phase 15 has no database migration. Its provider key, explicit model, and independent safety-identifier secret must remain server-side; review provider terms, retention, incident handling, monitoring, and redaction quality before enabling it.
 
 Production exports require an HTTPS `EXPO_PUBLIC_API_URL`. Android/iOS session refresh tokens use Expo SecureStore; web sessions use the API's HttpOnly cookie.
 
@@ -137,4 +140,4 @@ Phase 15 added no packages or lockfile changes. The last completed production-de
 
 ## Next phase
 
-The master plan's numbered implementation phases and the repository account-closure controls are complete. Repository CI, linting, tracked-secret checks, and dependency-readiness health are implemented, but this is not a production approval. The next recommended work is an operator-facing data-subject request workflow and an approved collection-by-collection retention schedule. External gates—threat modeling, penetration testing, accessibility/device QA, published policies, provider approval, monitoring, backup/restore drills, dependency remediation, live index validation, and staged deployment—remain open in the [production-readiness checklist](docs/production-readiness.md).
+The master plan's original numbered phases, the repository account-closure controls, and the Phase 16 privacy-request case workflow are complete. Repository CI, linting, tracked-secret checks, and dependency-readiness health are implemented, but this is not a production approval. Product, privacy, legal, security, and operations owners must now approve the draft collection-by-collection retention schedule and implement its purge/export runbooks. External gates—threat modeling, penetration testing, accessibility/device QA, published policies, provider approval, monitoring, backup/restore drills, dependency remediation, live index validation, and staged deployment—remain open in the [production-readiness checklist](docs/production-readiness.md).

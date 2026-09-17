@@ -57,6 +57,7 @@ route traffic using `/health/ready`; process supervisors may use `/health`.
 | Terms, Privacy Policy, Community Guidelines | No approved public documents supplied                                                     | Blocking product/legal publication                                                |
 | Safety reporting, blocking, suspension      | API/service tests                                                                         | Repository verified; operational staffing/appeal process required                 |
 | Account closure                             | Reauthentication, commitment gate, anonymization, revocation, identity purge queue, tests | Repository verified; published notice and final retention schedule still blocking |
+| Data-subject request operations             | Authenticated intake, owner-safe status, admin-only queue, completion attestations, audit | Repository verified; approved fulfillment/export/purge runbooks still blocking    |
 | Fake impact/mock production data            | No production seed command or hardcoded impact totals                                     | Repository verified; deployment data review required                              |
 | Dependency risk                             | Lockfiles are fixed; earlier audit findings are documented                                | Blocking fresh registry audit and remediation/acceptance                          |
 | Accessibility/device/end-to-end flows       | Build exports pass                                                                        | Blocking physical-device, screen-reader, and full workflow QA                     |
@@ -104,9 +105,10 @@ route traffic using `/health/ready`; process supervisors may use `/health`.
 ## Remaining release blockers
 
 The platform must not be represented as production-ready until the external and
-missing items above are closed. Self-service account closure is implemented,
-but the collection-by-collection retention schedule, public notice, privacy
-request case handling, and backup/legal-hold procedures still require approval.
+missing items above are closed. Self-service account closure and privacy-request
+case handling are implemented, but the collection-by-collection retention
+schedule, public notice, fulfillment runbooks, and backup/legal-hold procedures
+still require approval.
 The highest-priority operational gaps are backup/restore proof, error monitoring
 and alert drills, published policies, live index/provider validation,
 dependency review, and end-to-end accessibility/device testing.

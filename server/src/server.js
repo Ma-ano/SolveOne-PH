@@ -19,6 +19,7 @@ import { createLogger } from "./config/logger.js";
 import { createGiveawayModule } from "./config/giveaways.js";
 import { createMissionModule } from "./config/missions.js";
 import { createOfferModule } from "./config/offers.js";
+import { createPrivacyRequestModule } from "./config/privacyRequests.js";
 import { createNotificationModule } from "./config/notifications.js";
 import { createVerificationModule } from "./config/verifications.js";
 import { createRequestModule } from "./config/requests.js";
@@ -78,6 +79,10 @@ export async function startServer({ source = process.env } = {}) {
   const { authRouter, authService } = createAuthModule(config, logger);
   const publisher = new RealtimePublisher();
   const { userRouter } = createUserModule(authService);
+  const {
+    ownerRouter: privacyRequestRouter,
+    adminRouter: adminPrivacyRequestRouter,
+  } = createPrivacyRequestModule(config, authService);
   const { aiAssistanceRouter } = createAiAssistanceModule(config, authService);
   const { requestRouter, adminRequestRouter } = createRequestModule(
     config,
@@ -145,6 +150,8 @@ export async function startServer({ source = process.env } = {}) {
     missionContributionRouter,
     adminMissionRouter,
     aiAssistanceRouter,
+    privacyRequestRouter,
+    adminPrivacyRequestRouter,
     readinessCheck: () => !config.mongoUri || databaseIsReady(),
   });
   const httpServer = createServer(app);

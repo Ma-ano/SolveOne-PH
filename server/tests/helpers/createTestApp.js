@@ -34,6 +34,8 @@ export function createTestApp(overrides = {}, options = {}) {
     reportRouter: options.reportRouter,
     blockRouter: options.blockRouter,
     adminSafetyRouter: options.adminSafetyRouter,
+    privacyRequestRouter: options.privacyRequestRouter,
+    adminPrivacyRequestRouter: options.adminPrivacyRequestRouter,
     readinessCheck: options.readinessCheck,
   });
 }

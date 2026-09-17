@@ -196,6 +196,22 @@ export const SECURITY_EVENT_TYPES = Object.freeze([
   "account_closed",
 ]);
 
+export const DATA_SUBJECT_REQUEST_TYPES = Object.freeze([
+  "access",
+  "rectification",
+  "erasure_or_blocking",
+  "objection",
+  "portability",
+]);
+
+export const DATA_SUBJECT_REQUEST_STATUSES = Object.freeze([
+  "submitted",
+  "in_review",
+  "completed",
+  "denied",
+  "cancelled",
+]);
+
 export const PLATFORM_DONATION_STATUSES = Object.freeze([
   "pending",
   "paid",

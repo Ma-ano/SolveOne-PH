@@ -38,6 +38,8 @@ export function createApp({
   missionContributionRouter,
   adminMissionRouter,
   aiAssistanceRouter,
+  privacyRequestRouter,
+  adminPrivacyRequestRouter,
   readinessCheck,
 }) {
   if (!config || !logger) {
@@ -123,6 +125,12 @@ export function createApp({
   if (notificationRouter) app.use("/api/v1/notifications", notificationRouter);
 
   if (aiAssistanceRouter) app.use("/api/v1/ai", aiAssistanceRouter);
+
+  if (privacyRequestRouter)
+    app.use("/api/v1/privacy-requests", privacyRequestRouter);
+
+  if (adminPrivacyRequestRouter)
+    app.use("/api/v1/admin/privacy-requests", adminPrivacyRequestRouter);
 
   if (donationRouter) app.use("/api/v1/platform-donations", donationRouter);
 
