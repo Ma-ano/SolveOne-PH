@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocalSearchParams } from "expo-router";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { AuthLink, AuthShell } from "../src/features/auth/AuthShell";
 import { authApi } from "../src/features/auth/authApi";
@@ -14,28 +14,35 @@ import { emailFormSchema } from "../src/features/auth/schemas";
 
 export default function VerifyEmailScreen() {
   const params = useLocalSearchParams();
-  const token = typeof params.token === "string" ? params.token : "";
-  const initialEmail = typeof params.email === "string" ? params.email : "";
+  const tokenParam = typeof params.token === "string" ? params.token : "";
+  const emailParam = typeof params.email === "string" ? params.email : "";
+  const [routeParamsReady, setRouteParamsReady] = useState(false);
   const [verified, setVerified] = useState(false);
   const [message, setMessage] = useState(null);
   const [verifyError, setVerifyError] = useState(null);
   const [isVerifying, setIsVerifying] = useState(false);
+  const attemptedToken = useRef("");
   const {
     control,
     handleSubmit,
+    reset,
     setError,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(emailFormSchema),
-    defaultValues: { email: initialEmail },
+    defaultValues: { email: "" },
   });
 
-  async function verify() {
+  const token = routeParamsReady ? tokenParam : "";
+
+  async function verify(candidateToken = token) {
+    if (!candidateToken) return;
+
     setIsVerifying(true);
     setVerifyError(null);
 
     try {
-      await authApi.verifyEmail(token);
+      await authApi.verifyEmail(candidateToken);
       setVerified(true);
     } catch (error) {
       setVerifyError(error.message);
@@ -43,6 +50,24 @@ export default function VerifyEmailScreen() {
       setIsVerifying(false);
     }
   }
+
+  useEffect(() => {
+    setRouteParamsReady(true);
+    if (emailParam) reset({ email: emailParam });
+  }, [emailParam, reset]);
+
+  useEffect(() => {
+    if (
+      !routeParamsReady ||
+      !tokenParam ||
+      attemptedToken.current === tokenParam
+    ) {
+      return;
+    }
+
+    attemptedToken.current = tokenParam;
+    void verify(tokenParam);
+  }, [routeParamsReady, tokenParam]);
 
   const resend = handleSubmit(async ({ email }) => {
     try {
@@ -77,8 +102,8 @@ export default function VerifyEmailScreen() {
         <FormNotice tone="success">Your email address is verified.</FormNotice>
       ) : null}
       {token && !verified ? (
-        <PrimaryButton loading={isVerifying} onPress={verify}>
-          Verify email
+        <PrimaryButton loading={isVerifying} onPress={() => verify(token)}>
+          {verifyError ? "Try verification again" : "Verify email"}
         </PrimaryButton>
       ) : null}
 
