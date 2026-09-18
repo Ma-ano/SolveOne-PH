@@ -3,6 +3,7 @@ import { Alert, Pressable, Text, View } from "react-native";
 
 import { FoundationCard } from "../src/components/FoundationCard";
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { useAuth } from "../src/features/auth/AuthContext";
 
 export default function HomeScreen() {
@@ -43,42 +44,43 @@ export default function HomeScreen() {
         </View>
       ) : null}
 
-      <View className="mb-2 flex-row flex-wrap gap-3">
-        <Link href="/requests" asChild>
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-14 justify-center rounded-2xl bg-pine px-6"
+      <View className="rounded-3xl border border-line bg-surface px-6 py-10 md:px-10 md:py-14">
+        <View className="max-w-4xl">
+          <Text className="text-xs font-bold uppercase tracking-widest text-coral">
+            Small help matters
+          </Text>
+          <Text
+            accessibilityRole="header"
+            className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
           >
-            <Text className="font-black text-white">Discover requests</Text>
-          </Pressable>
-        </Link>
-        <Link href={isAuthenticated ? "/request-editor" : "/login"} asChild>
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-14 justify-center rounded-2xl border border-leaf px-6"
-          >
-            <Text className="font-black text-leaf">Create a request</Text>
-          </Pressable>
-        </Link>
+            One clear problem. One practical way forward.
+          </Text>
+          <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
+            You don’t need to change the world. Solve one thing—with an item, a
+            skill, some time, or a small amount you can spare.
+          </Text>
+        </View>
+        <View className="mt-8 flex-row flex-wrap gap-3">
+          <Link href="/requests" asChild>
+            <Pressable
+              accessibilityRole="link"
+              className="min-h-14 justify-center rounded-2xl bg-pine px-6"
+            >
+              <Text className="font-black text-white">Discover requests</Text>
+            </Pressable>
+          </Link>
+          <Link href={isAuthenticated ? "/request-editor" : "/login"} asChild>
+            <Pressable
+              accessibilityRole="link"
+              className="min-h-14 justify-center rounded-2xl border border-leaf px-6"
+            >
+              <Text className="font-black text-leaf">Create a request</Text>
+            </Pressable>
+          </Link>
+        </View>
       </View>
 
-      <View className="max-w-4xl py-14 md:py-24">
-        <Text className="text-xs font-bold uppercase tracking-widest text-coral">
-          Small help matters
-        </Text>
-        <Text
-          accessibilityRole="header"
-          className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
-        >
-          One clear problem. One practical way forward.
-        </Text>
-        <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
-          You don’t need to change the world. Solve one thing—with an item, a
-          skill, some time, or a small amount you can spare.
-        </Text>
-      </View>
-
-      <View className="gap-4 pb-10 md:flex-row">
+      <ResponsiveGrid className="mt-5 pb-4">
         <FoundationCard
           eyebrow="Concrete"
           title="A finish line people can understand"
@@ -94,7 +96,7 @@ export default function HomeScreen() {
           title="Privacy before publicity"
           description="Moderation and factual verification protect people without exposing their private details."
         />
-      </View>
+      </ResponsiveGrid>
     </PageContainer>
   );
 }

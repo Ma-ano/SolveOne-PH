@@ -22,7 +22,7 @@ export function OfferCard({ offer, perspective, actions }) {
   const person =
     perspective === "owner" ? offer.helper : (offer.request?.owner ?? null);
   return (
-    <View className="rounded-3xl border border-line bg-surface p-6">
+    <View className="h-full rounded-3xl border border-line bg-surface p-6">
       <View className="flex-row flex-wrap items-center justify-between gap-3">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           {humanize(offer.helpType)} · {offerCommitment(offer)}

@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
 import { requestApi } from "../src/features/requests/requestApi";
@@ -82,11 +83,11 @@ export default function RequestsScreen() {
           </Text>
         </View>
       ) : null}
-      <View className="gap-4">
+      <ResponsiveGrid>
         {requests.map((item) => (
           <RequestCard key={item.id} request={item} />
         ))}
-      </View>
+      </ResponsiveGrid>
       {requestsQuery.hasNextPage ? (
         <Pressable
           accessibilityRole="button"

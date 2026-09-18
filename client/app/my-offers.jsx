@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Alert, Pressable, Text, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
@@ -128,7 +129,7 @@ export default function MyOffersScreen() {
           </Text>
         </View>
       ) : null}
-      <View className="gap-4">
+      <ResponsiveGrid>
         {offers.map((offer) => (
           <OfferCard
             actions={
@@ -219,7 +220,7 @@ export default function MyOffersScreen() {
             perspective="helper"
           />
         ))}
-      </View>
+      </ResponsiveGrid>
       {offersQuery.hasNextPage ? (
         <Pressable
           accessibilityRole="button"

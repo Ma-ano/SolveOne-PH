@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { useAuth } from "../src/features/auth/AuthContext";
 import { FormNotice } from "../src/features/auth/FormControls";
@@ -92,11 +93,11 @@ export default function MyMissionsScreen() {
             </Text>
           </View>
         ) : null}
-        <View className="mt-6 gap-4">
+        <ResponsiveGrid className="mt-6">
           {missions.map((mission) => (
             <MissionCard key={mission.id} manage mission={mission} />
           ))}
-        </View>
+        </ResponsiveGrid>
         {query.hasNextPage ? (
           <Pressable
             accessibilityRole="button"

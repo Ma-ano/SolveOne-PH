@@ -5,6 +5,7 @@ import { Pressable, Text, View } from "react-native";
 
 import { ConfirmationDialog } from "../src/components/ConfirmationDialog";
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
@@ -128,7 +129,7 @@ export default function MyRequestsScreen() {
           </Text>
         </View>
       ) : null}
-      <View className="gap-4">
+      <ResponsiveGrid>
         {requests.map((item) => (
           <View key={item.id}>
             <RequestCard manage request={item} />
@@ -167,7 +168,7 @@ export default function MyRequestsScreen() {
             ) : null}
           </View>
         ))}
-      </View>
+      </ResponsiveGrid>
       {requestsQuery.hasNextPage ? (
         <Pressable
           accessibilityRole="button"

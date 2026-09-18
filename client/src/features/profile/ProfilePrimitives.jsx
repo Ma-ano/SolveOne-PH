@@ -3,7 +3,9 @@ import { Text, View } from "react-native";
 export function ProfileNav({ action }) {
   if (!action) return null;
   return (
-    <View className="mb-6 flex-row flex-wrap justify-end gap-2">{action}</View>
+    <View className="mb-7 flex-row flex-wrap items-center justify-end gap-2 self-end rounded-2xl border border-line bg-surface p-2">
+      {action}
+    </View>
   );
 }
 

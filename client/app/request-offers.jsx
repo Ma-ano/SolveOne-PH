@@ -7,6 +7,7 @@ import { Alert, Pressable, Text, View } from "react-native";
 import { Link, useLocalSearchParams } from "expo-router";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
@@ -166,7 +167,7 @@ export default function RequestOffersScreen() {
           </Text>
         </View>
       ) : null}
-      <View className="gap-4">
+      <ResponsiveGrid>
         {offers.map((offer) => (
           <OfferCard
             actions={
@@ -216,7 +217,7 @@ export default function RequestOffersScreen() {
             perspective="owner"
           />
         ))}
-      </View>
+      </ResponsiveGrid>
       {offersQuery.hasNextPage ? (
         <Pressable
           accessibilityRole="button"

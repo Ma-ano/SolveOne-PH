@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { useAuth } from "../src/features/auth/AuthContext";
 import { FormNotice } from "../src/features/auth/FormControls";
@@ -105,11 +106,11 @@ export default function ConversationsScreen() {
           </Text>
         </View>
       ) : null}
-      <View className="mt-5 gap-4">
+      <ResponsiveGrid className="mt-5">
         {conversations.map((conversation) => (
           <ConversationCard conversation={conversation} key={conversation.id} />
         ))}
-      </View>
+      </ResponsiveGrid>
       {conversationsQuery.hasNextPage ? (
         <Pressable
           accessibilityRole="button"

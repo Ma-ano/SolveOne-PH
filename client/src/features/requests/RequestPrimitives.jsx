@@ -40,7 +40,9 @@ export function formatRequestDate(value) {
 export function RequestNav({ action }) {
   if (!action) return null;
   return (
-    <View className="mb-6 flex-row flex-wrap justify-end gap-2">{action}</View>
+    <View className="mb-7 flex-row flex-wrap items-center justify-end gap-2 self-end rounded-2xl border border-line bg-surface p-2">
+      {action}
+    </View>
   );
 }
 
@@ -134,7 +136,7 @@ export function RequestCard({ request, manage = false }) {
     <Link href={href} asChild>
       <Pressable
         accessibilityRole="link"
-        className="rounded-3xl border border-line bg-surface p-6"
+        className={`${manage ? "" : "h-full"} rounded-3xl border border-line bg-surface p-6`}
       >
         <View className="flex-row flex-wrap items-center justify-between gap-3">
           <Text className="text-xs font-bold uppercase tracking-widest text-coral">

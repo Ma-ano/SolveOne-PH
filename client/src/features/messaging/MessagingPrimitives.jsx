@@ -31,7 +31,7 @@ export function ConversationCard({ conversation }) {
     >
       <Pressable
         accessibilityRole="link"
-        className="rounded-3xl border border-line bg-surface p-5"
+        className="h-full rounded-3xl border border-line bg-surface p-5"
       >
         <View className="flex-row flex-wrap items-start justify-between gap-3">
           <View className="flex-1">

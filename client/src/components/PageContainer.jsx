@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AppHeader } from "./AppHeader";
 import { AppFooter } from "./AppFooter";
+import { PageBackButton } from "./PageBackButton";
 import { PageTransition } from "./PageTransition";
 import { StickyHeader } from "./StickyHeader";
 
@@ -34,15 +35,16 @@ export function PageContainer({ children }) {
         <StickyHeader hidden={headerHidden}>
           <View
             className="w-full self-center px-4 pt-4 sm:px-6 md:px-10 md:pt-5 xl:px-12"
-            style={{ maxWidth: 1440 }}
+            style={{ maxWidth: 1280 }}
           >
             <AppHeader />
           </View>
         </StickyHeader>
         <View
-          className="w-full flex-1 self-center px-4 pb-5 pt-7 sm:px-6 md:px-10 md:pb-8 md:pt-9 xl:px-12"
-          style={{ maxWidth: 1440 }}
+          className="w-full flex-1 self-center px-4 pb-5 pt-5 sm:px-6 md:px-10 md:pb-8 md:pt-7 xl:px-12"
+          style={{ maxWidth: 1280 }}
         >
+          <PageBackButton />
           <PageTransition>{children}</PageTransition>
           <AppFooter />
         </View>

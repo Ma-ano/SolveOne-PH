@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 export function FoundationCard({ eyebrow, title, description }) {
   return (
-    <View className="min-h-44 flex-1 rounded-3xl border border-line bg-surface p-6">
+    <View className="h-full min-h-44 flex-1 rounded-3xl border border-line bg-surface p-6">
       <Text className="text-xs font-bold uppercase tracking-widest text-leaf">
         {eyebrow}
       </Text>

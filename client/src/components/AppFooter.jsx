@@ -13,16 +13,18 @@ const footerLinks = [
 export function AppFooter() {
   return (
     <View className="mt-16 border-t border-line py-8 md:mt-24 md:py-10">
-      <View className="gap-7 md:flex-row md:items-end md:justify-between">
-        <View className="max-w-xl">
-          <Text className="text-lg font-black text-pine">SolveOne PH</Text>
-          <Text className="mt-2 text-sm leading-6 text-muted">
+      <View className="items-center gap-7 md:flex-row md:items-end md:justify-between">
+        <View className="max-w-xl items-center md:items-start">
+          <Text className="text-center text-lg font-black text-pine md:text-left">
+            SolveOne PH
+          </Text>
+          <Text className="mt-2 text-center text-sm leading-6 text-muted md:text-left">
             A community-powered place for practical help, free items, and local
             missions across the Philippines. Share safely, meet responsibly, and
             help solve one problem at a time.
           </Text>
         </View>
-        <View className="flex-row flex-wrap gap-x-5 gap-y-1">
+        <View className="flex-row flex-wrap justify-center gap-x-5 gap-y-1 md:justify-end">
           {footerLinks.map(([href, label]) => (
             <Link key={href} href={href} asChild>
               <Pressable
@@ -35,7 +37,7 @@ export function AppFooter() {
           ))}
         </View>
       </View>
-      <Text className="mt-7 text-xs font-semibold uppercase tracking-widest text-muted">
+      <Text className="mt-7 text-center text-xs font-semibold uppercase tracking-widest text-muted md:text-left">
         Built for neighbors helping neighbors.
       </Text>
     </View>

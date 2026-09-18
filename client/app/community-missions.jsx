@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
 import { missionApi } from "../src/features/missions/missionApi";
@@ -110,11 +111,11 @@ export default function CommunityMissionsScreen() {
             </Text>
           </View>
         ) : null}
-        <View className="mt-8 gap-4">
+        <ResponsiveGrid className="mt-8">
           {missions.map((mission) => (
             <MissionCard key={mission.id} mission={mission} />
           ))}
-        </View>
+        </ResponsiveGrid>
         {query.hasNextPage ? (
           <Pressable
             accessibilityRole="button"

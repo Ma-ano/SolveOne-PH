@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
@@ -92,11 +93,11 @@ export default function MyGiveawaysScreen() {
             </Text>
           </View>
         ) : null}
-        <View className="mt-6 gap-4">
+        <ResponsiveGrid className="mt-6">
           {items.map((item) => (
             <GiveawayCard item={item} key={item.id} />
           ))}
-        </View>
+        </ResponsiveGrid>
         {query.hasNextPage ? (
           <Pressable
             accessibilityRole="button"

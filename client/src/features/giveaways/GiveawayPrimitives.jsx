@@ -6,7 +6,7 @@ import { VerificationBadge } from "../profile/ProfilePrimitives";
 
 export function GiveawayCard({ item, actions }) {
   return (
-    <View className="rounded-3xl border border-line bg-surface p-6">
+    <View className="h-full rounded-3xl border border-line bg-surface p-6">
       <View className="flex-row flex-wrap items-center justify-between gap-3">
         <Text className="text-xs font-black uppercase tracking-wider text-coral">
           {humanize(item.category)} · {humanize(item.condition)}
@@ -66,7 +66,7 @@ export function HandoffCard({ reservation, currentUserId, actions }) {
     ? reservation.recipientConfirmedAt
     : reservation.donorConfirmedAt;
   return (
-    <View className="rounded-3xl border border-line bg-surface p-6">
+    <View className="h-full rounded-3xl border border-line bg-surface p-6">
       <Text className="text-xs font-black uppercase tracking-wider text-coral">
         {isDonor ? "You are giving" : "You are receiving"} ·{" "}
         {reservation.status}

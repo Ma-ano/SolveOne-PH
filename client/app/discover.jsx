@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { useAuth } from "../src/features/auth/AuthContext";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { requestApi } from "../src/features/requests/requestApi";
@@ -281,11 +282,11 @@ export default function DiscoveryScreen() {
             </Text>
           </View>
         ) : null}
-        <View className="mt-6 gap-4">
+        <ResponsiveGrid className="mt-6">
           {requests.map((item) => (
             <RequestCard key={item.id} request={item} />
           ))}
-        </View>
+        </ResponsiveGrid>
         {query.hasNextPage ? (
           <Pressable
             accessibilityRole="button"

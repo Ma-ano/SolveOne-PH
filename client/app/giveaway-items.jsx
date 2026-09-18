@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
 import { giveawayApi } from "../src/features/giveaways/giveawayApi";
@@ -155,11 +156,11 @@ export default function GiveawayItemsScreen() {
             </Text>
           </View>
         ) : null}
-        <View className="mt-6 gap-4">
+        <ResponsiveGrid className="mt-6">
           {items.map((item) => (
             <GiveawayCard item={item} key={item.id} />
           ))}
-        </View>
+        </ResponsiveGrid>
         {listingQuery.hasNextPage ? (
           <Pressable
             accessibilityRole="button"

@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Alert, Pressable, Text, View } from "react-native";
 
 import { PageContainer } from "../src/components/PageContainer";
+import { ResponsiveGrid } from "../src/components/ResponsiveGrid";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { FormNotice } from "../src/features/auth/FormControls";
 import { useAuth } from "../src/features/auth/AuthContext";
@@ -153,7 +154,7 @@ export default function GiveawayHandoffsScreen() {
             </Text>
           </View>
         ) : null}
-        <View className="mt-6 gap-4">
+        <ResponsiveGrid className="mt-6">
           {reservations.map((reservation) => {
             const isDonor = reservation.donorId === user.id;
             const ownConfirmed = isDonor
@@ -186,7 +187,7 @@ export default function GiveawayHandoffsScreen() {
               />
             );
           })}
-        </View>
+        </ResponsiveGrid>
         {query.hasNextPage ? (
           <Pressable
             accessibilityRole="button"
