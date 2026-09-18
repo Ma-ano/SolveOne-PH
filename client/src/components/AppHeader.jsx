@@ -95,11 +95,11 @@ export function AppHeader() {
 
   return (
     <View className="border-b border-line pb-5">
-      <View className="items-center justify-center gap-3">
+      <View className="flex-row flex-wrap items-center justify-center gap-x-1 gap-y-2">
         <Link href="/" asChild>
           <Pressable
             accessibilityRole="link"
-            className="min-h-12 items-center justify-center"
+            className="min-h-12 items-center justify-center px-3"
           >
             <Text className="text-center text-xl font-black tracking-tight text-pine">
               SolveOne PH
@@ -109,39 +109,6 @@ export function AppHeader() {
             </Text>
           </Pressable>
         </Link>
-        <View className="flex-row flex-wrap items-center justify-center gap-2">
-          {displayStatus === "authenticated" ? (
-            <>
-              <Text className="px-2 text-center text-sm font-semibold text-muted">
-                Hi, {user.firstName}
-              </Text>
-              <Pressable
-                accessibilityRole="button"
-                className="min-h-11 justify-center rounded-xl border border-line px-3"
-                onPress={logout}
-              >
-                <Text className="text-sm font-bold text-leaf">Sign out</Text>
-              </Pressable>
-            </>
-          ) : displayStatus === "anonymous" ? (
-            <>
-              <NavLink href="/login" label="Sign in" pathname={pathname} />
-              <Link href="/register" asChild>
-                <Pressable
-                  accessibilityRole="link"
-                  className="min-h-11 justify-center rounded-xl bg-pine px-4"
-                >
-                  <Text className="text-sm font-black text-white">Join</Text>
-                </Pressable>
-              </Link>
-            </>
-          ) : (
-            <Text className="text-sm font-semibold text-muted">Loading…</Text>
-          )}
-        </View>
-      </View>
-
-      <View className="mt-4 flex-row flex-wrap items-center justify-center gap-1">
         {publicLinks.map(([href, label]) => (
           <NavLink key={href} href={href} label={label} pathname={pathname} />
         ))}
@@ -159,6 +126,36 @@ export function AppHeader() {
               />
             ))
           : null}
+        {displayStatus === "authenticated" ? (
+          <>
+            <Text className="px-2 text-center text-sm font-semibold text-muted">
+              Hi, {user.firstName}
+            </Text>
+            <Pressable
+              accessibilityRole="button"
+              className="min-h-11 justify-center rounded-xl border border-line px-3"
+              onPress={logout}
+            >
+              <Text className="text-sm font-bold text-leaf">Sign out</Text>
+            </Pressable>
+          </>
+        ) : displayStatus === "anonymous" ? (
+          <>
+            <NavLink href="/login" label="Sign in" pathname={pathname} />
+            <Link href="/register" asChild>
+              <Pressable
+                accessibilityRole="link"
+                className="min-h-11 justify-center rounded-xl bg-pine px-4"
+              >
+                <Text className="text-sm font-black text-white">Join</Text>
+              </Pressable>
+            </Link>
+          </>
+        ) : (
+          <Text className="px-3 text-sm font-semibold text-muted">
+            Loading…
+          </Text>
+        )}
       </View>
 
       {displayStatus === "authenticated" &&
