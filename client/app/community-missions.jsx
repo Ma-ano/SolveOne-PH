@@ -54,7 +54,7 @@ export default function CommunityMissionsScreen() {
           ) : null
         }
       />
-      <View className="mx-auto w-full max-w-5xl">
+      <View className="w-full">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Verified community action
         </Text>

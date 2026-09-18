@@ -196,7 +196,7 @@ export default function IdentityVerificationScreen() {
   return (
     <PageContainer>
       <ProfileNav action={<Link href="/profile">Back to profile</Link>} />
-      <View className="mx-auto w-full max-w-3xl gap-6">
+      <View className="w-full gap-6">
         <View>
           <Text className="text-xs font-bold uppercase tracking-widest text-coral">
             Optional private review

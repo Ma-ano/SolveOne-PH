@@ -121,7 +121,7 @@ export default function ReportModerationScreen() {
 
   return (
     <PageContainer>
-      <View className="mx-auto w-full max-w-5xl">
+      <View className="w-full">
         <View className="flex-row flex-wrap items-center justify-between gap-3">
           <View>
             <Text

@@ -105,7 +105,7 @@ export default function AdminPrivacyRequestsScreen() {
 
   return (
     <PageContainer>
-      <View className="mx-auto w-full max-w-5xl">
+      <View className="w-full">
         <Link href="/profile" asChild>
           <Pressable
             accessibilityRole="link"

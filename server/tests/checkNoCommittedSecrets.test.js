@@ -20,6 +20,7 @@ describe("committed-secret checks", () => {
       "proj",
       "abcdefghijklmnopqrstuvwxyz1234567890",
     ].join("-");
+    const groqKey = ["gsk", "abcdefghijklmnopqrstuvwx1234567890"].join("_");
     const privateKey = `${["-----BEGIN", "PRIVATE", "KEY-----"].join(" ")}\nsecret\n-----END PRIVATE KEY-----`;
 
     expect(
@@ -28,6 +29,9 @@ describe("committed-secret checks", () => {
         `OPENAI_API_KEY=${openAiProjectKey}`,
       ),
     ).toEqual(["OpenAI project key"]);
+    expect(
+      inspectTrackedFile("server/config.txt", `GROQ_API_KEY=${groqKey}`),
+    ).toEqual(["Groq API key"]);
     expect(inspectTrackedFile("cert.txt", privateKey)).toEqual(["private key"]);
     expect(
       inspectTrackedFile(

@@ -33,7 +33,7 @@ export default function PublicProfileScreen() {
   return (
     <PageContainer>
       <ProfileNav />
-      <View className="mx-auto w-full max-w-3xl">
+      <View className="w-full">
         {!validUserId ? (
           <FormNotice>
             This public profile link is incomplete or invalid.

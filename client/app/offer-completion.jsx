@@ -331,7 +331,7 @@ export default function OfferCompletionScreen() {
   return (
     <PageContainer>
       <RequestNav />
-      <View className="mx-auto w-full max-w-2xl rounded-3xl border border-line bg-surface p-6 md:p-8">
+      <View className="w-full rounded-3xl border border-line bg-surface p-6 md:p-8">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Private completion review
         </Text>

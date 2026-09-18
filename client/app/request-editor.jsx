@@ -297,7 +297,7 @@ export default function RequestEditorScreen() {
   return (
     <PageContainer>
       <RequestNav />
-      <View className="mx-auto w-full max-w-4xl">
+      <View className="w-full">
         <View className="mb-8 md:flex-row md:items-end md:justify-between">
           <View className="max-w-2xl">
             <Text className="text-xs font-bold uppercase tracking-widest text-coral">

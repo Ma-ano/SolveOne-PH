@@ -136,7 +136,7 @@ export default function IdentityReviewScreen() {
       <ProfileNav
         action={<Link href="/admin/requests">Request reviews</Link>}
       />
-      <View className="mx-auto w-full max-w-3xl gap-6">
+      <View className="w-full gap-6">
         <View>
           <Text className="text-xs font-bold uppercase tracking-widest text-coral">
             Restricted reviewer workspace

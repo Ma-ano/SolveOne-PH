@@ -50,12 +50,15 @@ review, and a documented incident process.
 
 ## Provider contract
 
-The server adapter uses OpenAI's Responses API with:
+The server supports OpenAI's Responses API and Groq's OpenAI-compatible Chat
+Completions API. Groq uses strict Structured Outputs with a compatible model.
+Both adapters use:
 
 - an explicitly configured model and server-only API key;
-- `store: false`, no tools, and a bounded output-token limit;
+- no tools and a bounded output-token limit; OpenAI also sets `store: false`;
 - strict JSON Schema output;
-- an HMAC-SHA-256 safety identifier instead of the user ID;
+- an HMAC-SHA-256 safety identifier instead of the user ID for providers that
+  support one; Groq receives no user identifier;
 - a bounded provider timeout and generic external-error handling.
 
 The API key, model, and HMAC secret are never exposed through `EXPO_PUBLIC_*`
@@ -80,9 +83,9 @@ AI assistance stays off unless all of the following are set on the server:
 
 ```text
 AI_ASSISTANCE_ENABLED=true
-AI_PROVIDER=openai
-OPENAI_API_KEY=<server-only key>
-OPENAI_MODEL=<explicit structured-output-capable model>
+AI_PROVIDER=groq
+GROQ_API_KEY=<server-only key>
+GROQ_MODEL=openai/gpt-oss-20b
 AI_SAFETY_IDENTIFIER_SECRET=<independent high-entropy secret>
 ```
 

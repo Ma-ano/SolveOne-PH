@@ -100,7 +100,7 @@ export default function PrivacyRequestsScreen() {
 
   return (
     <PageContainer>
-      <View className="mx-auto w-full max-w-4xl">
+      <View className="w-full">
         <Link href="/profile" asChild>
           <Pressable
             accessibilityRole="link"

@@ -116,9 +116,11 @@ const sourceSchema = z.object({
   PAYMENT_WEBHOOK_SECRET: z.string().trim().default(""),
   PAYMENT_METHOD_TYPES: z.string().trim().default("card,gcash,qrph"),
   AI_ASSISTANCE_ENABLED: z.enum(["true", "false"]).default("false"),
-  AI_PROVIDER: z.enum(["", "openai"]).default(""),
+  AI_PROVIDER: z.enum(["", "openai", "groq"]).default(""),
   OPENAI_API_KEY: z.string().trim().default(""),
   OPENAI_MODEL: z.string().trim().default(""),
+  GROQ_API_KEY: z.string().trim().default(""),
+  GROQ_MODEL: z.string().trim().default(""),
   AI_SAFETY_IDENTIFIER_SECRET: z.string().default(""),
   AI_REQUEST_RATE_LIMIT_WINDOW_MS: z.coerce
     .number()
@@ -427,22 +429,37 @@ export function parseEnvironment(source = process.env) {
   }
 
   if (values.AI_ASSISTANCE_ENABLED === "true") {
-    if (values.AI_PROVIDER !== "openai")
+    if (!values.AI_PROVIDER)
       issues.push({
         path: ["AI_PROVIDER"],
-        message: "Enabled AI assistance requires the OpenAI provider",
+        message: "Enabled AI assistance requires an AI provider",
       });
-    if (!/^sk-[A-Za-z0-9_-]{16,}$/.test(values.OPENAI_API_KEY))
-      issues.push({
-        path: ["OPENAI_API_KEY"],
-        message:
-          "Enabled AI assistance requires a real server-side OpenAI API key",
-      });
-    if (!/^[A-Za-z0-9][A-Za-z0-9._:-]{0,99}$/.test(values.OPENAI_MODEL))
-      issues.push({
-        path: ["OPENAI_MODEL"],
-        message: "Enabled AI assistance requires an explicit model identifier",
-      });
+    if (values.AI_PROVIDER === "openai") {
+      if (!/^sk-[A-Za-z0-9_-]{16,}$/.test(values.OPENAI_API_KEY))
+        issues.push({
+          path: ["OPENAI_API_KEY"],
+          message:
+            "Enabled OpenAI assistance requires a real server-side API key",
+        });
+      if (!/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/.test(values.OPENAI_MODEL))
+        issues.push({
+          path: ["OPENAI_MODEL"],
+          message: "Enabled OpenAI assistance requires an explicit model",
+        });
+    }
+    if (values.AI_PROVIDER === "groq") {
+      if (!/^gsk_[A-Za-z0-9_-]{20,}$/.test(values.GROQ_API_KEY))
+        issues.push({
+          path: ["GROQ_API_KEY"],
+          message:
+            "Enabled Groq assistance requires a real server-side API key",
+        });
+      if (!/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/.test(values.GROQ_MODEL))
+        issues.push({
+          path: ["GROQ_MODEL"],
+          message: "Enabled Groq assistance requires an explicit model",
+        });
+    }
     if (!isStrongConfiguredSecret(values.AI_SAFETY_IDENTIFIER_SECRET))
       issues.push({
         path: ["AI_SAFETY_IDENTIFIER_SECRET"],
@@ -558,6 +575,10 @@ export function parseEnvironment(source = process.env) {
       ? ""
       : values.OPENAI_API_KEY,
     openAiModel: values.OPENAI_MODEL,
+    groqApiKey: values.GROQ_API_KEY.startsWith("replace-")
+      ? ""
+      : values.GROQ_API_KEY,
+    groqModel: values.GROQ_MODEL,
     aiSafetyIdentifierSecret: values.AI_SAFETY_IDENTIFIER_SECRET.startsWith(
       "replace-",
     )

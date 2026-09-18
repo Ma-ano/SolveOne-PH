@@ -65,6 +65,8 @@ export const authTestConfig = Object.freeze({
   aiProvider: "",
   openAiApiKey: "",
   openAiModel: "",
+  groqApiKey: "",
+  groqModel: "",
   aiSafetyIdentifierSecret:
     "test-ai-safety-identifier-secret-with-32-characters",
   aiRequestRateLimitWindowMs: 60000,

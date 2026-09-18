@@ -205,6 +205,30 @@ describe("parseEnvironment", () => {
     expect(config.aiAssistanceEnabled).toBe(true);
     expect(config.aiProvider).toBe("openai");
     expect(config.openAiModel).toBe("configured-structured-output-model");
+
+    const groqConfig = parseEnvironment({
+      NODE_ENV: "test",
+      AI_ASSISTANCE_ENABLED: "true",
+      AI_PROVIDER: "groq",
+      GROQ_API_KEY: "gsk_fixture_key_with_enough_characters",
+      GROQ_MODEL: "openai/gpt-oss-20b",
+      AI_SAFETY_IDENTIFIER_SECRET:
+        "independent-ai-safety-secret-with-32-characters",
+    });
+    expect(groqConfig.aiProvider).toBe("groq");
+    expect(groqConfig.groqModel).toBe("openai/gpt-oss-20b");
+
+    expect(() =>
+      parseEnvironment({
+        NODE_ENV: "test",
+        AI_ASSISTANCE_ENABLED: "true",
+        AI_PROVIDER: "groq",
+        GROQ_API_KEY: "replace-with-provider-key",
+        GROQ_MODEL: "openai/gpt-oss-20b",
+        AI_SAFETY_IDENTIFIER_SECRET:
+          "independent-ai-safety-secret-with-32-characters",
+      }),
+    ).toThrow(EnvironmentConfigError);
   });
 
   it("requires private S3-compatible storage in production", () => {

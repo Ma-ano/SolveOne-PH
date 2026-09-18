@@ -20,6 +20,7 @@ const secretPatterns = Object.freeze([
   ["private key", /-----BEGIN (?:EC |OPENSSH |RSA )?PRIVATE KEY-----/],
   ["AWS access key", /\bAKIA[0-9A-Z]{16}\b/],
   ["OpenAI project key", /\bsk-proj-[A-Za-z0-9_-]{32,}\b/],
+  ["Groq API key", /\bgsk_[A-Za-z0-9_-]{20,}\b/],
   ["live PayMongo key", /\bsk_live_[A-Za-z0-9_-]{24,}\b/],
   [
     "credential-bearing MongoDB URI",

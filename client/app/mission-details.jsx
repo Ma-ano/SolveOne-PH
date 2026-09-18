@@ -149,7 +149,7 @@ export default function MissionDetailsScreen() {
       {query.error ? <FormNotice>{query.error.message}</FormNotice> : null}
       {notice ? <FormNotice>{notice}</FormNotice> : null}
       {mission ? (
-        <View className="mx-auto w-full max-w-4xl">
+        <View className="w-full">
           <View className="rounded-3xl border border-line bg-surface p-7 md:p-12">
             <View className="flex-row flex-wrap items-center justify-between gap-3">
               <Text className="text-xs font-bold uppercase tracking-widest text-coral">

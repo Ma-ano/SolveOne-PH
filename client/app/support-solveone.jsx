@@ -143,7 +143,7 @@ export default function SupportSolveOneScreen() {
           ) : null
         }
       />
-      <View className="mx-auto w-full max-w-3xl gap-7">
+      <View className="w-full gap-7">
         <View>
           <Text className="text-xs font-bold uppercase tracking-widest text-coral">
             Support SolveOne

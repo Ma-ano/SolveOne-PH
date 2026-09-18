@@ -17,7 +17,7 @@ export default function AuditLogScreen() {
 
   return (
     <PageContainer>
-      <View className="mx-auto w-full max-w-4xl">
+      <View className="w-full">
         <Link href="/admin/reports" asChild>
           <Pressable
             accessibilityRole="link"

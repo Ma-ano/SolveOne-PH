@@ -65,7 +65,7 @@ export default function MyMissionsScreen() {
           </View>
         }
       />
-      <View className="mx-auto w-full max-w-4xl">
+      <View className="w-full">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Creator workspace
         </Text>

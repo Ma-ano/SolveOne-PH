@@ -137,7 +137,7 @@ export default function OfferCreateScreen() {
   return (
     <PageContainer>
       <RequestNav />
-      <View className="mx-auto w-full max-w-2xl">
+      <View className="w-full">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           I can help · {humanize(needItem.type)}
         </Text>

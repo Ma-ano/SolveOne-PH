@@ -31,7 +31,7 @@ export default function ImpactScreen() {
   return (
     <PageContainer>
       <RequestNav />
-      <View className="mx-auto w-full max-w-3xl">
+      <View className="w-full">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Verified impact
         </Text>

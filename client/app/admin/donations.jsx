@@ -34,7 +34,7 @@ export default function DonationAdminScreen() {
       <RequestNav
         action={<Link href="/support-solveone">Donation history</Link>}
       />
-      <View className="mx-auto w-full max-w-4xl gap-6">
+      <View className="w-full gap-6">
         <View>
           <Text className="text-xs font-bold uppercase tracking-widest text-coral">
             Admin accounting view

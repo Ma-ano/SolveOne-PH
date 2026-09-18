@@ -141,7 +141,7 @@ export function AppHeader() {
         </View>
       </View>
 
-      <View className="mt-4 flex-row flex-wrap items-center gap-1">
+      <View className="mt-4 flex-row flex-wrap items-center justify-center gap-1">
         {publicLinks.map(([href, label]) => (
           <NavLink key={href} href={href} label={label} pathname={pathname} />
         ))}
@@ -163,7 +163,7 @@ export function AppHeader() {
 
       {displayStatus === "authenticated" &&
       ["moderator", "admin"].includes(user.role) ? (
-        <View className="mt-3 flex-row flex-wrap items-center gap-1 rounded-2xl bg-surface p-2">
+        <View className="mt-3 flex-row flex-wrap items-center justify-center gap-1 rounded-2xl bg-surface p-2">
           <Text className="px-2 text-xs font-black uppercase tracking-widest text-coral">
             Operations
           </Text>

@@ -119,7 +119,7 @@ export default function DiscoveryScreen() {
   return (
     <PageContainer>
       <RequestNav />
-      <View className="mx-auto w-full max-w-5xl">
+      <View className="w-full">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Advanced discovery
         </Text>

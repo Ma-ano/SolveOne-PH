@@ -23,7 +23,7 @@ export default function SafetyScreen() {
 
   return (
     <PageContainer>
-      <View className="mx-auto w-full max-w-3xl">
+      <View className="w-full">
         <Link href="/profile" asChild>
           <Pressable
             accessibilityRole="link"

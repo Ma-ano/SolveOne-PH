@@ -23,9 +23,10 @@ remote and no tracked files yet.
 
 The secret check rejects tracked private `.env` variants, credential-file
 extensions, private-key blocks, credential-bearing MongoDB URIs, and selected
-high-confidence provider key formats. It reports only the file and finding type,
-never the matched secret. It is a guardrail, not a replacement for host-level
-secret scanning, history scanning, or key rotation after exposure.
+high-confidence provider key formats, including Groq keys. It reports only the
+file and finding type, never the matched secret. It is a guardrail, not a
+replacement for host-level secret scanning, history scanning, or key rotation
+after exposure.
 
 ## Health contract
 

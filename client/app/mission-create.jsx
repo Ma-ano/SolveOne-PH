@@ -146,7 +146,7 @@ export default function MissionCreateScreen() {
           </Link>
         }
       />
-      <View className="mx-auto w-full max-w-3xl rounded-3xl border border-line bg-surface p-6 md:p-10">
+      <View className="w-full rounded-3xl border border-line bg-surface p-6 md:p-10">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Moderated community mission
         </Text>

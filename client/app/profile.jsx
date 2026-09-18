@@ -124,7 +124,7 @@ export default function ProfileScreen() {
           </Link>
         }
       />
-      <View className="mx-auto w-full max-w-5xl">
+      <View className="w-full">
         <View className="mb-6 md:flex-row md:items-end md:justify-between">
           <View className="max-w-xl md:flex-row md:items-center md:gap-5">
             <View className="mb-4 md:mb-0">
