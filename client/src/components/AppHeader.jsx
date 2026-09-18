@@ -55,12 +55,12 @@ function NavLink({ href, label, pathname }) {
       <Pressable
         accessibilityRole="link"
         accessibilityState={{ selected: active }}
-        className={`min-h-11 justify-center rounded-xl px-3 ${
+        className={`min-h-11 items-center justify-center rounded-xl px-3 ${
           active ? "bg-mint" : "bg-transparent"
         }`}
       >
         <Text
-          className={`text-sm font-bold ${active ? "text-pine" : "text-leaf"}`}
+          className={`text-center text-sm font-bold ${active ? "text-pine" : "text-leaf"}`}
         >
           {label}
         </Text>
@@ -94,8 +94,8 @@ export function AppHeader() {
   };
 
   return (
-    <View className="border-b border-line pb-5">
-      <View className="flex-row flex-wrap items-center justify-center gap-x-1 gap-y-2">
+    <View className="items-center border-b border-line pb-5">
+      <View className="w-full flex-row flex-wrap items-center justify-center gap-x-1 gap-y-2">
         <Link href="/" asChild>
           <Pressable
             accessibilityRole="link"
@@ -133,10 +133,12 @@ export function AppHeader() {
             </Text>
             <Pressable
               accessibilityRole="button"
-              className="min-h-11 justify-center rounded-xl border border-line px-3"
+              className="min-h-11 items-center justify-center rounded-xl border border-line px-3"
               onPress={logout}
             >
-              <Text className="text-sm font-bold text-leaf">Sign out</Text>
+              <Text className="text-center text-sm font-bold text-leaf">
+                Sign out
+              </Text>
             </Pressable>
           </>
         ) : displayStatus === "anonymous" ? (
@@ -145,14 +147,16 @@ export function AppHeader() {
             <Link href="/register" asChild>
               <Pressable
                 accessibilityRole="link"
-                className="min-h-11 justify-center rounded-xl bg-pine px-4"
+                className="min-h-11 items-center justify-center rounded-xl bg-pine px-4"
               >
-                <Text className="text-sm font-black text-white">Join</Text>
+                <Text className="text-center text-sm font-black text-white">
+                  Join
+                </Text>
               </Pressable>
             </Link>
           </>
         ) : (
-          <Text className="px-3 text-sm font-semibold text-muted">
+          <Text className="px-3 text-center text-sm font-semibold text-muted">
             Loading…
           </Text>
         )}
@@ -160,8 +164,8 @@ export function AppHeader() {
 
       {displayStatus === "authenticated" &&
       ["moderator", "admin"].includes(user.role) ? (
-        <View className="mt-3 flex-row flex-wrap items-center justify-center gap-1 rounded-2xl bg-surface p-2">
-          <Text className="px-2 text-xs font-black uppercase tracking-widest text-coral">
+        <View className="mt-3 w-full flex-row flex-wrap items-center justify-center gap-1 rounded-2xl bg-surface p-2">
+          <Text className="px-2 text-center text-xs font-black uppercase tracking-widest text-coral">
             Operations
           </Text>
           {reviewerLinks.map(([href, label]) => (
@@ -181,14 +185,16 @@ export function AppHeader() {
       ) : null}
 
       {pathname !== "/" ? (
-        <View className="mt-4 border-t border-line pt-3">
+        <View className="mt-4 w-full items-center border-t border-line pt-3">
           <Pressable
             accessibilityLabel="Go back to the previous page"
             accessibilityRole="button"
-            className="min-h-11 flex-row items-center self-start rounded-xl px-2"
+            className="min-h-11 flex-row items-center self-center rounded-xl px-2"
             onPress={goBack}
           >
-            <Text className="text-sm font-black text-leaf">← Back</Text>
+            <Text className="text-center text-sm font-black text-leaf">
+              ← Back
+            </Text>
           </Pressable>
         </View>
       ) : null}
