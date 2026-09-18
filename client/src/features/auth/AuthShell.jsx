@@ -12,7 +12,7 @@ export function AuthShell({ eyebrow, title, description, children, footer }) {
         </Text>
         <Text
           accessibilityRole="header"
-          className="mt-3 text-4xl font-black tracking-tight text-ink"
+          className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
         >
           {title}
         </Text>

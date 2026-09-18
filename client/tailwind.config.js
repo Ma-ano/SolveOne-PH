@@ -8,6 +8,16 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      fontSize: {
+        "page-title": [
+          "2.25rem",
+          { lineHeight: "2.5rem", letterSpacing: "-0.025em" },
+        ],
+        "page-title-lg": [
+          "3rem",
+          { lineHeight: "3.25rem", letterSpacing: "-0.025em" },
+        ],
+      },
       colors: {
         canvas: "#F7F4EC",
         surface: "#FFFEFA",

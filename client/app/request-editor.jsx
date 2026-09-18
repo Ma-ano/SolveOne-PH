@@ -303,7 +303,7 @@ export default function RequestEditorScreen() {
             <Text className="text-xs font-bold uppercase tracking-widest text-coral">
               {hasRequestId ? "Request workspace" : "New private draft"}
             </Text>
-            <Text className="mt-3 text-4xl font-black tracking-tight text-ink md:text-5xl">
+            <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
               What exactly would solve the problem?
             </Text>
             <Text className="mt-4 text-base leading-7 text-muted">

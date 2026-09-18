@@ -125,7 +125,7 @@ export default function DiscoveryScreen() {
         </Text>
         <Text
           accessibilityRole="header"
-          className="mt-3 text-4xl font-black text-ink md:text-6xl"
+          className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
         >
           Find one practical way to help.
         </Text>

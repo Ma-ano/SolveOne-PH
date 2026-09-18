@@ -119,7 +119,7 @@ export default function NotificationsScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Private account updates
         </Text>
-        <Text className="mt-3 text-4xl font-black tracking-tight text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Notifications
         </Text>
         <Text className="mt-3 leading-7 text-muted">

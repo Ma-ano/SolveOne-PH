@@ -157,10 +157,10 @@ export default function MissionDetailsScreen() {
               </Text>
               <StatusBadge status={mission.status} />
             </View>
-            <Text className="mt-5 text-4xl font-black tracking-tight text-ink">
+            <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
               {mission.title}
             </Text>
-            <Text className="mt-5 text-base leading-8 text-muted">
+            <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
               {mission.description}
             </Text>
             <View className="mt-6 flex-row flex-wrap gap-x-6 gap-y-3 border-y border-line py-5">

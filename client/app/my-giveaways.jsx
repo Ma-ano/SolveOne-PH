@@ -69,10 +69,10 @@ export default function MyGiveawaysScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Donor workspace
         </Text>
-        <Text className="mt-3 text-4xl font-black text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Your free items
         </Text>
-        <Text className="mt-3 leading-7 text-muted">
+        <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
           Open an item to see category-matched needs. Active reservations must
           be cancelled or completed before a listing can be removed.
         </Text>

@@ -7,12 +7,12 @@ export default function NotFoundScreen() {
   return (
     <PageContainer>
       <View className="max-w-xl flex-1 justify-center py-16">
-        <Text className="text-sm font-bold uppercase tracking-widest text-coral">
+        <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Page not found
         </Text>
         <Text
           accessibilityRole="header"
-          className="mt-4 text-4xl font-black text-ink"
+          className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
         >
           This path doesn’t lead to a problem yet.
         </Text>

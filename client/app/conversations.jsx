@@ -69,10 +69,10 @@ export default function ConversationsScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Private help coordination
         </Text>
-        <Text className="mt-3 text-4xl font-black tracking-tight text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Messages
         </Text>
-        <Text className="mt-3 text-base leading-7 text-muted">
+        <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
           Chats exist only for accepted help offers. Realtime is{" "}
           {realtime.status}; persisted messages remain available if it
           disconnects.

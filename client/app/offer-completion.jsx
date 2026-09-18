@@ -335,7 +335,7 @@ export default function OfferCompletionScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Private completion review
         </Text>
-        <Text className="mt-3 text-3xl font-black text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Assistance evidence
         </Text>
         <View className="mt-4">

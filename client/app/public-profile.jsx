@@ -56,7 +56,7 @@ export default function PublicProfileScreen() {
             </Text>
             <Text
               accessibilityRole="header"
-              className="mt-3 text-4xl font-black tracking-tight text-ink md:text-5xl"
+              className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
             >
               {profile.displayName}
             </Text>

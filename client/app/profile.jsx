@@ -136,7 +136,7 @@ export default function ProfileScreen() {
               </Text>
               <Text
                 accessibilityRole="header"
-                className="mt-3 text-4xl font-black tracking-tight text-ink"
+                className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
               >
                 How you show up
               </Text>

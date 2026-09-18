@@ -111,7 +111,7 @@ export default function PrivacyRequestsScreen() {
         </Link>
         <Text
           accessibilityRole="header"
-          className="text-4xl font-black text-ink"
+          className="text-page-title font-black text-ink md:text-page-title-lg"
         >
           Your privacy requests
         </Text>

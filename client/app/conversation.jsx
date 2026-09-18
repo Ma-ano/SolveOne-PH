@@ -219,7 +219,7 @@ export default function ConversationScreen() {
           <Text className="text-xs font-bold uppercase tracking-widest text-coral">
             Help conversation · {realtime.status}
           </Text>
-          <Text className="mt-3 text-3xl font-black tracking-tight text-ink">
+          <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
             {conversation.otherParticipant?.displayName ?? "Help participant"}
           </Text>
           <Text className="mt-2 leading-7 text-muted">

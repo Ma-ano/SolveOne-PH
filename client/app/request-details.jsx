@@ -71,11 +71,11 @@ export default function RequestDetailsScreen() {
             </View>
             <Text
               accessibilityRole="header"
-              className="mt-5 text-4xl font-black tracking-tight text-ink md:text-6xl"
+              className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
             >
               {item.title}
             </Text>
-            <Text className="mt-5 text-base leading-8 text-muted md:text-lg">
+            <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
               {item.description}
             </Text>
 

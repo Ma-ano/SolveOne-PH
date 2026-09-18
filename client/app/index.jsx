@@ -63,16 +63,16 @@ export default function HomeScreen() {
       </View>
 
       <View className="max-w-4xl py-14 md:py-24">
-        <Text className="text-sm font-bold uppercase tracking-widest text-coral">
+        <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Small help matters
         </Text>
         <Text
           accessibilityRole="header"
-          className="mt-5 text-5xl font-black leading-tight tracking-tight text-ink md:text-7xl"
+          className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
         >
           One clear problem. One practical way forward.
         </Text>
-        <Text className="mt-6 max-w-2xl text-lg leading-8 text-muted md:text-xl">
+        <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
           You don’t need to change the world. Solve one thing—with an item, a
           skill, some time, or a small amount you can spare.
         </Text>

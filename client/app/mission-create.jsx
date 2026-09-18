@@ -150,7 +150,7 @@ export default function MissionCreateScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Moderated community mission
         </Text>
-        <Text className="mt-3 text-4xl font-black text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           {editing ? "Revise this mission." : "Define one shared finish line."}
         </Text>
         <Text className="mt-3 leading-7 text-muted">

@@ -62,7 +62,7 @@ export default function GiveawayItemsScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Things I don't need
         </Text>
-        <Text className="mt-3 text-4xl font-black tracking-tight text-ink md:text-6xl">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Useful things, passed forward for free.
         </Text>
         <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">

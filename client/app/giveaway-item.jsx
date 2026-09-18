@@ -188,10 +188,10 @@ export default function GiveawayItemScreen() {
                 </Text>
               </View>
             </View>
-            <Text className="mt-5 text-4xl font-black text-ink md:text-6xl">
+            <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
               {item.title}
             </Text>
-            <Text className="mt-5 text-base leading-8 text-muted">
+            <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
               {item.description}
             </Text>
             <View className="mt-7 flex-row flex-wrap gap-4 border-y border-line py-6">

@@ -41,7 +41,7 @@ export default function DonationAdminScreen() {
           </Text>
           <Text
             accessibilityRole="header"
-            className="mt-3 text-4xl font-black text-ink"
+            className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
           >
             Platform donations
           </Text>

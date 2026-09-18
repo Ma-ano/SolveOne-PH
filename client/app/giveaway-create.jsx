@@ -127,7 +127,7 @@ export default function GiveawayCreateScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Free item listing
         </Text>
-        <Text className="mt-3 text-4xl font-black text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Pass one useful thing forward.
         </Text>
         <Text className="mt-3 leading-7 text-muted">

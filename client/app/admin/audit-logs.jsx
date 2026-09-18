@@ -28,7 +28,7 @@ export default function AuditLogScreen() {
         </Link>
         <Text
           accessibilityRole="header"
-          className="text-4xl font-black text-ink"
+          className="text-page-title font-black text-ink md:text-page-title-lg"
         >
           Privileged audit log
         </Text>

@@ -150,11 +150,11 @@ export default function SupportSolveOneScreen() {
           </Text>
           <Text
             accessibilityRole="header"
-            className="mt-3 text-4xl font-black text-ink"
+            className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
           >
             Keep practical help moving
           </Text>
-          <Text className="mt-4 leading-7 text-muted">
+          <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
             This optional donation supports operation of the SolveOne PH
             platform. It does not fund a specific request or recipient, does not
             create a wallet or payout, and does not buy verification, ranking,

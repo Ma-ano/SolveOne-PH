@@ -69,8 +69,10 @@ export default function MyMissionsScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Creator workspace
         </Text>
-        <Text className="mt-3 text-4xl font-black text-ink">Your missions</Text>
-        <Text className="mt-3 leading-7 text-muted">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
+          Your missions
+        </Text>
+        <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
           Drafts and evidence stay private. Published missions show only the
           moderated story, resource breakdown, and general location.
         </Text>

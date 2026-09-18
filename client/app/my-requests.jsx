@@ -97,10 +97,10 @@ export default function MyRequestsScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Owner workspace
         </Text>
-        <Text className="mt-3 text-4xl font-black tracking-tight text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Your help requests
         </Text>
-        <Text className="mt-3 text-base leading-7 text-muted">
+        <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
           Save privately, submit for review, and respond to specific moderator
           feedback.
         </Text>

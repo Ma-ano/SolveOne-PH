@@ -139,10 +139,10 @@ export default function RequestOffersScreen() {
             </Text>
             <StatusBadge status={ownedRequest.status} />
           </View>
-          <Text className="mt-3 text-3xl font-black tracking-tight text-ink">
+          <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
             {ownedRequest.title}
           </Text>
-          <Text className="mt-3 leading-7 text-muted">
+          <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
             Accept only the concrete amount you need. An accepted offer reserves
             capacity; it does not count as solved until completion is confirmed.
           </Text>

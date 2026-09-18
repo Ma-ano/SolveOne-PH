@@ -92,7 +92,7 @@ export default function MissionModerationScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Restricted verification workspace
         </Text>
-        <Text className="mt-3 text-4xl font-black text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Pending community missions
         </Text>
         <Text className="mt-4 leading-7 text-muted">

@@ -58,7 +58,7 @@ export default function CommunityMissionsScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           Verified community action
         </Text>
-        <Text className="mt-3 text-4xl font-black tracking-tight text-ink md:text-5xl">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Solve one shared problem together.
         </Text>
         <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">

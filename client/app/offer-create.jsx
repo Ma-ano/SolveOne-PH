@@ -141,7 +141,7 @@ export default function OfferCreateScreen() {
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           I can help · {humanize(needItem.type)}
         </Text>
-        <Text className="mt-3 text-4xl font-black tracking-tight text-ink">
+        <Text className="mt-3 text-page-title font-black text-ink md:text-page-title-lg">
           Make one concrete offer
         </Text>
         <Text className="mt-4 text-base leading-7 text-muted">

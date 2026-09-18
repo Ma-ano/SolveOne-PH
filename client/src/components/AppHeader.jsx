@@ -95,24 +95,24 @@ export function AppHeader() {
 
   return (
     <View className="border-b border-line pb-5">
-      <View className="flex-row flex-wrap items-center justify-between gap-3">
+      <View className="items-center justify-center gap-3">
         <Link href="/" asChild>
           <Pressable
             accessibilityRole="link"
-            className="min-h-12 justify-center"
+            className="min-h-12 items-center justify-center"
           >
-            <Text className="text-xl font-black tracking-tight text-pine">
+            <Text className="text-center text-xl font-black tracking-tight text-pine">
               SolveOne PH
             </Text>
-            <Text className="text-xs font-semibold uppercase tracking-widest text-muted">
+            <Text className="text-center text-xs font-semibold uppercase tracking-widest text-muted">
               Problems solved
             </Text>
           </Pressable>
         </Link>
-        <View className="flex-row flex-wrap items-center gap-2">
+        <View className="flex-row flex-wrap items-center justify-center gap-2">
           {displayStatus === "authenticated" ? (
             <>
-              <Text className="px-2 text-sm font-semibold text-muted">
+              <Text className="px-2 text-center text-sm font-semibold text-muted">
                 Hi, {user.firstName}
               </Text>
               <Pressable

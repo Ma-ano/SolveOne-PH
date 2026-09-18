@@ -46,11 +46,11 @@ export default function RequestsScreen() {
         </Text>
         <Text
           accessibilityRole="header"
-          className="mt-3 text-4xl font-black tracking-tight text-ink md:text-6xl"
+          className="mt-3 text-page-title font-black text-ink md:text-page-title-lg"
         >
           Small problems with a clear finish line.
         </Text>
-        <Text className="mt-4 text-base leading-7 text-muted md:text-lg">
+        <Text className="mt-4 max-w-3xl text-base leading-7 text-muted">
           Every request here has been reviewed. Exact addresses, private notes,
           and moderation details are not part of this public view.
         </Text>
