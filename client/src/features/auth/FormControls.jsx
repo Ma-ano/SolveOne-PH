@@ -1,4 +1,5 @@
 import { Controller } from "react-hook-form";
+import { useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -8,6 +9,7 @@ import {
 } from "react-native";
 
 export function FormField({
+  allowPasswordReveal = false,
   control,
   name,
   label,
@@ -21,6 +23,8 @@ export function FormField({
   numberOfLines,
   placeholder,
 }) {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
   return (
     <View className="mb-5">
       <Text className="mb-2 text-sm font-bold text-ink">{label}</Text>
@@ -28,26 +32,47 @@ export function FormField({
         control={control}
         name={name}
         render={({ field: { onBlur, onChange, value } }) => (
-          <TextInput
-            accessibilityLabel={label}
-            aria-invalid={Boolean(error)}
-            autoCapitalize={autoCapitalize}
-            autoComplete={autoComplete}
-            className={`${multiline ? "min-h-32 py-4" : "min-h-14"} rounded-2xl border bg-white px-4 text-base text-ink ${
-              error ? "border-coral" : "border-line"
-            }`}
-            keyboardType={keyboardType}
-            multiline={multiline}
-            numberOfLines={numberOfLines}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            placeholderTextColor="#7D8A83"
-            placeholder={placeholder}
-            secureTextEntry={secureTextEntry}
-            textContentType={textContentType}
-            textAlignVertical={multiline ? "top" : "center"}
-            value={value}
-          />
+          <View className="relative">
+            <TextInput
+              accessibilityLabel={label}
+              aria-invalid={Boolean(error)}
+              autoCapitalize={autoCapitalize}
+              autoComplete={autoComplete}
+              autoCorrect={!secureTextEntry}
+              className={`${multiline ? "min-h-32 py-4" : "min-h-14"} rounded-2xl border bg-white px-4 text-base text-ink ${
+                allowPasswordReveal ? "pr-14" : ""
+              } ${error ? "border-coral" : "border-line"}`}
+              keyboardType={keyboardType}
+              multiline={multiline}
+              numberOfLines={numberOfLines}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              placeholderTextColor="#7D8A83"
+              placeholder={placeholder}
+              secureTextEntry={secureTextEntry && !passwordVisible}
+              textContentType={textContentType}
+              textAlignVertical={multiline ? "top" : "center"}
+              value={value}
+            />
+            {allowPasswordReveal ? (
+              <Pressable
+                accessibilityLabel={
+                  passwordVisible ? "Hide password" : "Show password"
+                }
+                accessibilityRole="button"
+                accessibilityState={{ expanded: passwordVisible }}
+                className="absolute right-1 top-1 min-h-12 w-12 items-center justify-center rounded-xl"
+                onPress={() => setPasswordVisible((visible) => !visible)}
+              >
+                <View className="h-4 w-6 items-center justify-center rounded-full border-2 border-leaf">
+                  <View className="h-2 w-2 rounded-full bg-leaf" />
+                  {!passwordVisible ? (
+                    <View className="absolute h-0.5 w-7 rotate-45 bg-leaf" />
+                  ) : null}
+                </View>
+              </Pressable>
+            ) : null}
+          </View>
         )}
       />
       {error ? (

@@ -58,6 +58,7 @@ export default function LoginScreen() {
         textContentType="emailAddress"
       />
       <FormField
+        allowPasswordReveal
         autoComplete="current-password"
         control={control}
         error={errors.password}

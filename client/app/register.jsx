@@ -93,6 +93,7 @@ export default function RegisterScreen() {
         textContentType="emailAddress"
       />
       <FormField
+        allowPasswordReveal
         autoComplete="new-password"
         control={control}
         error={errors.password}
@@ -102,6 +103,7 @@ export default function RegisterScreen() {
         textContentType="newPassword"
       />
       <FormField
+        allowPasswordReveal
         autoComplete="new-password"
         control={control}
         error={errors.passwordConfirmation}

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 
@@ -29,6 +29,7 @@ const profileQueryKey = ["private-profile"];
 
 export default function ProfileScreen() {
   const queryClient = useQueryClient();
+  const [savedNotice, setSavedNotice] = useState("");
   const { authenticatedRequest, status, updateCurrentUser, user } = useAuth();
   const profileQuery = useQuery({
     queryKey: profileQueryKey,
@@ -53,6 +54,7 @@ export default function ProfileScreen() {
   }, [profileQuery.data, reset]);
 
   const onSubmit = handleSubmit(async (values) => {
+    setSavedNotice("");
     try {
       const result = await profileApi.updatePrivateProfile(
         authenticatedRequest,
@@ -61,6 +63,7 @@ export default function ProfileScreen() {
       updateCurrentUser(result.user);
       queryClient.setQueryData(profileQueryKey, result);
       reset(profileToFormValues(result.user));
+      setSavedNotice("Your profile has been saved successfully.");
     } catch (error) {
       setError("root", { message: error.message });
     }
@@ -121,7 +124,7 @@ export default function ProfileScreen() {
           </Link>
         }
       />
-      <View className="mx-auto w-full max-w-3xl">
+      <View className="mx-auto w-full max-w-5xl">
         <View className="mb-6 md:flex-row md:items-end md:justify-between">
           <View className="max-w-xl md:flex-row md:items-center md:gap-5">
             <View className="mb-4 md:mb-0">
@@ -247,6 +250,9 @@ export default function ProfileScreen() {
             <FormNotice>{profileQuery.error.message}</FormNotice>
           ) : null}
           {errors.root ? <FormNotice>{errors.root.message}</FormNotice> : null}
+          {savedNotice ? (
+            <FormNotice tone="success">{savedNotice}</FormNotice>
+          ) : null}
 
           <View className="md:flex-row md:gap-4">
             <View className="flex-1">

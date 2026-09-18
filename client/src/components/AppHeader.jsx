@@ -94,7 +94,7 @@ export function AppHeader() {
   };
 
   return (
-    <View className="mb-7 border-b border-line pb-5">
+    <View className="border-b border-line pb-5">
       <View className="flex-row flex-wrap items-center justify-between gap-3">
         <Link href="/" asChild>
           <Pressable

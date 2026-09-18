@@ -6,7 +6,7 @@ import { PageContainer } from "../../components/PageContainer";
 export function AuthShell({ eyebrow, title, description, children, footer }) {
   return (
     <PageContainer>
-      <View className="w-full max-w-lg self-center rounded-3xl border border-line bg-surface p-6 shadow-sm md:p-10">
+      <View className="w-full max-w-2xl self-center rounded-3xl border border-line bg-surface p-6 shadow-sm md:p-10">
         <Text className="text-xs font-bold uppercase tracking-widest text-coral">
           {eyebrow}
         </Text>

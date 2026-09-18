@@ -1,7 +1,9 @@
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "expo-router";
-import { Alert, Pressable, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, Text, View } from "react-native";
 
+import { ConfirmationDialog } from "../src/components/ConfirmationDialog";
 import { PageContainer } from "../src/components/PageContainer";
 import { AuthLink } from "../src/features/auth/AuthShell";
 import { FormNotice } from "../src/features/auth/FormControls";
@@ -14,6 +16,10 @@ import {
 
 export default function MyRequestsScreen() {
   const queryClient = useQueryClient();
+  const [cancelTarget, setCancelTarget] = useState(null);
+  const [cancelPending, setCancelPending] = useState(false);
+  const [cancelError, setCancelError] = useState("");
+  const [cancelNotice, setCancelNotice] = useState("");
   const { authenticatedRequest, status } = useAuth();
   const requestsQuery = useInfiniteQuery({
     queryKey: ["my-requests"],
@@ -30,27 +36,26 @@ export default function MyRequestsScreen() {
     requestsQuery.data?.pages.flatMap((page) => page.items) ?? [];
 
   function cancelRequest(item) {
-    Alert.alert(
-      "Cancel this request?",
-      "A cancelled request cannot be reopened.",
-      [
-        { text: "Keep request", style: "cancel" },
-        {
-          text: "Cancel request",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await requestApi.cancel(authenticatedRequest, item.id);
-              await queryClient.invalidateQueries({
-                queryKey: ["my-requests"],
-              });
-            } catch (error) {
-              Alert.alert("Could not cancel request", error.message);
-            }
-          },
-        },
-      ],
-    );
+    setCancelNotice("");
+    setCancelError("");
+    setCancelTarget(item);
+  }
+
+  async function confirmCancellation() {
+    if (!cancelTarget || cancelPending) return;
+
+    setCancelError("");
+    setCancelPending(true);
+    try {
+      await requestApi.cancel(authenticatedRequest, cancelTarget.id);
+      await queryClient.invalidateQueries({ queryKey: ["my-requests"] });
+      setCancelTarget(null);
+      setCancelNotice("Your request has been cancelled.");
+    } catch (error) {
+      setCancelError(error.message);
+    } finally {
+      setCancelPending(false);
+    }
   }
 
   if (status !== "authenticated") {
@@ -103,6 +108,9 @@ export default function MyRequestsScreen() {
 
       {requestsQuery.error ? (
         <FormNotice>{requestsQuery.error.message}</FormNotice>
+      ) : null}
+      {cancelNotice ? (
+        <FormNotice tone="success">{cancelNotice}</FormNotice>
       ) : null}
       {requestsQuery.isLoading ? (
         <Text className="py-12 text-center font-semibold text-muted">
@@ -169,6 +177,20 @@ export default function MyRequestsScreen() {
           <Text className="font-black text-leaf">Load more</Text>
         </Pressable>
       ) : null}
+      <ConfirmationDialog
+        cancelLabel="Keep request"
+        confirmLabel="Cancel request"
+        error={cancelError}
+        message="This removes the request from active listings. A cancelled request cannot be reopened."
+        onCancel={() => {
+          setCancelError("");
+          setCancelTarget(null);
+        }}
+        onConfirm={confirmCancellation}
+        open={Boolean(cancelTarget)}
+        pending={cancelPending}
+        title="Cancel this request?"
+      />
     </PageContainer>
   );
 }
