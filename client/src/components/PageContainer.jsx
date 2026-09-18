@@ -34,7 +34,7 @@ export function PageContainer({ children }) {
       >
         <StickyHeader hidden={headerHidden}>
           <View
-            className="w-full self-center px-4 pt-4 sm:px-6 md:px-10 md:pt-5 xl:px-12"
+            className="mx-auto w-full self-center px-4 pt-4 sm:px-6 md:px-10 md:pt-5 xl:px-12"
             style={{ maxWidth: 1280 }}
           >
             <AppHeader />
