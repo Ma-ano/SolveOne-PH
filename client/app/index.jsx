@@ -6,7 +6,7 @@ import { PageContainer } from "../src/components/PageContainer";
 import { useAuth } from "../src/features/auth/AuthContext";
 
 export default function HomeScreen() {
-  const { isAuthenticated, logout, logoutAll, status, user } = useAuth();
+  const { isAuthenticated, logoutAll, user } = useAuth();
 
   async function handleLogoutAll() {
     try {
@@ -21,49 +21,6 @@ export default function HomeScreen() {
 
   return (
     <PageContainer>
-      <View className="flex-row items-center justify-between border-b border-line pb-5">
-        <View>
-          <Text className="text-xl font-black tracking-tight text-pine">
-            SolveOne PH
-          </Text>
-          <Text className="mt-1 text-xs font-semibold uppercase tracking-widest text-muted">
-            Problems solved
-          </Text>
-        </View>
-        {status === "loading" ? (
-          <Text className="text-sm font-semibold text-muted">
-            Restoring session…
-          </Text>
-        ) : isAuthenticated ? (
-          <Pressable
-            accessibilityRole="button"
-            className="min-h-12 justify-center rounded-xl px-3"
-            onPress={logout}
-          >
-            <Text className="text-sm font-bold text-leaf">Sign out</Text>
-          </Pressable>
-        ) : (
-          <View className="flex-row gap-2">
-            <Link href="/login" asChild>
-              <Pressable
-                accessibilityRole="link"
-                className="min-h-12 justify-center rounded-xl px-3"
-              >
-                <Text className="text-sm font-bold text-leaf">Sign in</Text>
-              </Pressable>
-            </Link>
-            <Link href="/register" asChild>
-              <Pressable
-                accessibilityRole="link"
-                className="min-h-12 justify-center rounded-xl bg-pine px-4"
-              >
-                <Text className="text-sm font-black text-white">Join</Text>
-              </Pressable>
-            </Link>
-          </View>
-        )}
-      </View>
-
       {isAuthenticated ? (
         <View className="mb-4 rounded-2xl border border-mint bg-mint p-4">
           <Text className="font-bold text-pine">
@@ -73,52 +30,6 @@ export default function HomeScreen() {
             {user.email} · {user.verificationLevel}
           </Text>
           <View className="mt-3 flex-row flex-wrap gap-2">
-            <Link href="/my-requests" asChild>
-              <Pressable
-                accessibilityRole="link"
-                className="min-h-12 justify-center rounded-xl bg-leaf px-4"
-              >
-                <Text className="text-sm font-black text-white">
-                  My requests
-                </Text>
-              </Pressable>
-            </Link>
-            <Link href="/profile" asChild>
-              <Pressable
-                accessibilityRole="link"
-                className="min-h-12 justify-center rounded-xl bg-pine px-4"
-              >
-                <Text className="text-sm font-black text-white">
-                  Edit profile
-                </Text>
-              </Pressable>
-            </Link>
-            <Link href="/my-offers" asChild>
-              <Pressable
-                accessibilityRole="link"
-                className="min-h-12 justify-center rounded-xl border border-leaf px-4"
-              >
-                <Text className="text-sm font-black text-leaf">My offers</Text>
-              </Pressable>
-            </Link>
-            <Link href="/conversations" asChild>
-              <Pressable
-                accessibilityRole="link"
-                className="min-h-12 justify-center rounded-xl border border-leaf px-4"
-              >
-                <Text className="text-sm font-black text-leaf">Messages</Text>
-              </Pressable>
-            </Link>
-            <Link href="/support-solveone" asChild>
-              <Pressable
-                accessibilityRole="link"
-                className="min-h-12 justify-center rounded-xl border border-leaf px-4"
-              >
-                <Text className="text-sm font-black text-leaf">
-                  Support SolveOne
-                </Text>
-              </Pressable>
-            </Link>
             <Pressable
               accessibilityRole="button"
               className="min-h-12 justify-center rounded-xl border border-leaf px-4"
@@ -128,52 +39,6 @@ export default function HomeScreen() {
                 Sign out all devices
               </Text>
             </Pressable>
-            {["moderator", "admin"].includes(user.role) ? (
-              <>
-                <Link href="/admin/requests" asChild>
-                  <Pressable
-                    accessibilityRole="link"
-                    className="min-h-12 justify-center rounded-xl border border-coral px-4"
-                  >
-                    <Text className="text-sm font-bold text-coral">
-                      Review requests
-                    </Text>
-                  </Pressable>
-                </Link>
-                <Link href="/admin/missions" asChild>
-                  <Pressable
-                    accessibilityRole="link"
-                    className="min-h-12 justify-center rounded-xl border border-coral px-4"
-                  >
-                    <Text className="text-sm font-bold text-coral">
-                      Verify missions
-                    </Text>
-                  </Pressable>
-                </Link>
-                <Link href="/admin/reports" asChild>
-                  <Pressable
-                    accessibilityRole="link"
-                    className="min-h-12 justify-center rounded-xl border border-coral px-4"
-                  >
-                    <Text className="text-sm font-bold text-coral">
-                      Review safety reports
-                    </Text>
-                  </Pressable>
-                </Link>
-              </>
-            ) : null}
-            {user.role === "admin" ? (
-              <Link href="/admin/donations" asChild>
-                <Pressable
-                  accessibilityRole="link"
-                  className="min-h-12 justify-center rounded-xl border border-coral px-4"
-                >
-                  <Text className="text-sm font-bold text-coral">
-                    Donation dashboard
-                  </Text>
-                </Pressable>
-              </Link>
-            ) : null}
           </View>
         </View>
       ) : null}

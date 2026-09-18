@@ -12,9 +12,11 @@ export function createAiAssistanceRouter({
   config,
 }) {
   const router = Router();
+  const authenticate = requireAuth(authService);
+  router.get("/status", authenticate, asyncHandler(controller.status));
   router.post(
     "/request-structure",
-    requireAuth(authService),
+    authenticate,
     createScopedRateLimiter({
       windowMs: config.aiRequestRateLimitWindowMs,
       limit: config.aiRequestRateLimitMax,

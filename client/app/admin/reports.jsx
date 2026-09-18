@@ -151,7 +151,7 @@ export default function ReportModerationScreen() {
           <FormNotice>Moderator access is required.</FormNotice>
         ) : null}
         {error ? <FormNotice>{error.message}</FormNotice> : null}
-        <View className="mt-6 flex-row gap-2">
+        <View className="mt-6 flex-row flex-wrap gap-2">
           {["open", "reviewing"].map((value) => (
             <Pressable
               key={value}

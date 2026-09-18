@@ -8,8 +8,35 @@
     background: #f7f4ec;
   }
 
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
   *:focus-visible {
     outline: 3px solid #f4b64a;
     outline-offset: 3px;
+  }
+
+  a,
+  [role="button"] {
+    transition:
+      transform 160ms ease,
+      opacity 160ms ease,
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    a:hover,
+    [role="button"]:hover {
+      transform: translateY(-1px);
+    }
   }
 }

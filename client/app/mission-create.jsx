@@ -232,7 +232,7 @@ export default function MissionCreateScreen() {
                 className="rounded-2xl border border-line bg-sand p-5"
                 key={field.id}
               >
-                <View className="mb-4 flex-row items-center justify-between gap-3">
+                <View className="mb-4 flex-row flex-wrap items-center justify-between gap-3">
                   <Text className="text-lg font-black text-ink">
                     Resource {index + 1}
                   </Text>

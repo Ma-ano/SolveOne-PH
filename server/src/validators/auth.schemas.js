@@ -67,6 +67,10 @@ export const refreshSchema = {
     .strict(),
 };
 
+export const restoreSessionSchema = {
+  body: z.object({ deviceName, platform }).strict(),
+};
+
 export const logoutSchema = {
   body: z.object({ refreshToken: token.optional() }).strict(),
 };

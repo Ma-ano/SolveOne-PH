@@ -134,6 +134,42 @@ describe("authentication API", () => {
     );
   });
 
+  it("restores browser sessions without an expected anonymous 401", async () => {
+    const fixture = createAuthFixture();
+    const anonymous = await request(fixture.app)
+      .post("/api/v1/auth/session")
+      .send({ platform: "web", deviceName: "Browser" });
+    expect(anonymous.status).toBe(200);
+    expect(anonymous.body.data).toEqual({ session: null });
+    expect(anonymous.headers["cache-control"]).toBe("private, no-store");
+
+    const invalid = await request(fixture.app)
+      .post("/api/v1/auth/session")
+      .set("Cookie", `solveone_refresh=${"x".repeat(40)}`)
+      .send({ platform: "web", deviceName: "Browser" });
+    expect(invalid.status).toBe(200);
+    expect(invalid.body.data).toEqual({ session: null });
+    expect(invalid.headers["set-cookie"][0]).toContain("solveone_refresh=;");
+
+    await registerAndVerify(fixture);
+    const login = await request(fixture.app).post("/api/v1/auth/login").send({
+      email: validRegistration.email,
+      password: validRegistration.password,
+      deviceName: "Browser",
+      platform: "web",
+    });
+    const cookie = login.headers["set-cookie"][0].split(";")[0];
+    const restored = await request(fixture.app)
+      .post("/api/v1/auth/session")
+      .set("Cookie", cookie)
+      .send({ platform: "web", deviceName: "Browser" });
+    expect(restored.status).toBe(200);
+    expect(restored.body.data.session.user.email).toBe(
+      validRegistration.email.toLowerCase(),
+    );
+    expect(restored.body.data.session).not.toHaveProperty("refreshToken");
+  });
+
   it("uses the same forgot-password response for known and unknown accounts", async () => {
     const fixture = createAuthFixture();
     await registerAndVerify(fixture);

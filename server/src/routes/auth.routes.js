@@ -11,6 +11,7 @@ import {
   logoutSchema,
   refreshSchema,
   registerSchema,
+  restoreSessionSchema,
   resetPasswordSchema,
   verifyEmailSchema,
 } from "../validators/auth.schemas.js";
@@ -62,6 +63,12 @@ export function createAuthRouter({ authController, authService, config }) {
     emailLimiter,
     validateRequest(resetPasswordSchema),
     asyncHandler(authController.resetPassword),
+  );
+  router.post(
+    "/session",
+    authLimiter,
+    validateRequest(restoreSessionSchema),
+    asyncHandler(authController.restoreSession),
   );
   router.post(
     "/refresh",

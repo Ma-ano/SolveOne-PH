@@ -27,9 +27,18 @@ function isSessionRejected(error) {
 }
 
 async function loadInitialSession() {
+  if (usesCookieRefresh) {
+    try {
+      const result = await authApi.restoreSession();
+      return result.session;
+    } catch {
+      return null;
+    }
+  }
+
   const refreshToken = await getRefreshToken();
 
-  if (!usesCookieRefresh && !refreshToken) {
+  if (!refreshToken) {
     return null;
   }
 

@@ -33,6 +33,7 @@ import {
   requestCategories,
   requestDraftFormSchema,
   requestFormToPayload,
+  requestSubmissionChecklist,
   requestToFormValues,
   requestUrgencies,
 } from "../src/features/requests/schemas";
@@ -90,7 +91,7 @@ function ChoiceGroup({ control, label, name, options, multiple = false }) {
 
 function errorMessage(error) {
   const detail = error?.details
-    ?.slice(0, 3)
+    ?.slice(0, 8)
     .map((item) => item.message)
     .join(" · ");
   return detail ? `${error.message}: ${detail}` : error.message;
@@ -134,8 +135,16 @@ export default function RequestEditorScreen() {
     name: "needItems",
   });
   const watched = watch();
+  const submissionChecklist = requestSubmissionChecklist(watched);
+  const submissionReady = submissionChecklist.every((item) => item.met);
   const storedRequest = requestQuery.data?.request;
   const canEdit = !storedRequest || editableStatuses.has(storedRequest.status);
+  const aiStatusQuery = useQuery({
+    queryKey: ["ai-assistance-status"],
+    queryFn: () => aiApi.status(authenticatedRequest),
+    enabled: status === "authenticated" && canEdit,
+    staleTime: 5 * 60 * 1000,
+  });
 
   async function generateAiSuggestion() {
     setAiBusy(true);
@@ -227,6 +236,13 @@ export default function RequestEditorScreen() {
   const saveAndSubmit = handleSubmit(async (values) => {
     try {
       setSavedNotice("");
+      if (!requestSubmissionChecklist(values).every((item) => item.met)) {
+        setError("root", {
+          message:
+            "Finish the submission checklist below. You can still save this as a private draft.",
+        });
+        return;
+      }
       const saved = await persist(values);
       const result = await requestApi.submit(authenticatedRequest, saved.id);
       queryClient.setQueryData(["owned-request", saved.id], result);
@@ -326,146 +342,162 @@ export default function RequestEditorScreen() {
 
         {canEdit && !requestQuery.isLoading ? (
           <View className="rounded-3xl border border-line bg-surface p-6 md:p-10">
-            <View className="mb-8 rounded-3xl border border-line bg-canvas p-5 md:p-6">
-              <Text className="text-xs font-bold uppercase tracking-widest text-coral">
-                Optional AI writing help
-              </Text>
-              <Text className="mt-2 text-xl font-black text-ink">
-                Turn a rough description into an editable outline
-              </Text>
-              <Text className="mt-2 text-sm leading-6 text-muted">
-                This optional tool sends only the text below after the server
-                removes detected contact, address, ID, authentication, and
-                payment details. AI can be wrong. It cannot approve, submit, or
-                save a request, and the normal form works without it.
-              </Text>
-              <Text className="mb-2 mt-5 text-sm font-bold text-ink">
-                Rough description
-              </Text>
-              <TextInput
-                accessibilityLabel="Rough description for AI assistance"
-                className="min-h-32 rounded-2xl border border-line bg-white px-4 py-3 text-base text-ink"
-                maxLength={2000}
-                multiline
-                onChangeText={setAiDescription}
-                placeholder="Example: I need help getting my children ready for school, but I am not sure how to list each need."
-                placeholderTextColor="#738078"
-                textAlignVertical="top"
-                value={aiDescription}
-              />
-              <Pressable
-                accessibilityRole="checkbox"
-                accessibilityState={{ checked: aiConsent }}
-                className="mt-4 min-h-12 flex-row items-center"
-                onPress={() => setAiConsent((current) => !current)}
-              >
-                <View
-                  className={`mr-3 h-6 w-6 items-center justify-center rounded-md border ${
-                    aiConsent ? "border-pine bg-pine" : "border-line bg-white"
-                  }`}
+            {aiStatusQuery.data?.available ? (
+              <View className="mb-8 rounded-3xl border border-line bg-canvas p-5 md:p-6">
+                <Text className="text-xs font-bold uppercase tracking-widest text-coral">
+                  Optional AI writing help
+                </Text>
+                <Text className="mt-2 text-xl font-black text-ink">
+                  Turn a rough description into an editable outline
+                </Text>
+                <Text className="mt-2 text-sm leading-6 text-muted">
+                  This optional tool sends only the text below after the server
+                  removes detected contact, address, ID, authentication, and
+                  payment details. AI can be wrong. It cannot approve, submit,
+                  or save a request, and the normal form works without it.
+                </Text>
+                <Text className="mb-2 mt-5 text-sm font-bold text-ink">
+                  Rough description
+                </Text>
+                <TextInput
+                  accessibilityLabel="Rough description for AI assistance"
+                  className="min-h-32 rounded-2xl border border-line bg-white px-4 py-3 text-base text-ink"
+                  maxLength={2000}
+                  multiline
+                  onChangeText={setAiDescription}
+                  placeholder="Example: I need help getting my children ready for school, but I am not sure how to list each need."
+                  placeholderTextColor="#738078"
+                  textAlignVertical="top"
+                  value={aiDescription}
+                />
+                <Pressable
+                  accessibilityRole="checkbox"
+                  accessibilityState={{ checked: aiConsent }}
+                  className="mt-4 min-h-12 flex-row items-center"
+                  onPress={() => setAiConsent((current) => !current)}
                 >
-                  <Text className="font-black text-white">
-                    {aiConsent ? "✓" : ""}
-                  </Text>
-                </View>
-                <Text className="flex-1 text-sm leading-6 text-ink">
-                  I consent to sending the sanitized text to the configured AI
-                  provider for this one suggestion.
-                </Text>
-              </Pressable>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityState={{
-                  disabled:
-                    aiBusy || !aiConsent || aiDescription.trim().length < 20,
-                }}
-                className={`mt-4 min-h-14 items-center justify-center rounded-2xl px-5 ${
-                  aiBusy || !aiConsent || aiDescription.trim().length < 20
-                    ? "bg-line"
-                    : "bg-pine"
-                }`}
-                disabled={
-                  aiBusy || !aiConsent || aiDescription.trim().length < 20
-                }
-                onPress={generateAiSuggestion}
-              >
-                {aiBusy ? (
-                  <ActivityIndicator color="#FFFFFF" />
-                ) : (
-                  <Text className="font-black text-white">
-                    Generate suggestion
-                  </Text>
-                )}
-              </Pressable>
-              {aiNotice ? (
-                <Text className="mt-4 text-sm leading-6 text-muted">
-                  {aiNotice}
-                </Text>
-              ) : null}
-              {aiResult ? (
-                <View className="mt-5 rounded-2xl border border-leaf bg-white p-5">
-                  <Text className="text-xs font-bold uppercase tracking-widest text-leaf">
-                    Preview only · not saved
-                  </Text>
-                  <Text className="mt-2 text-xl font-black text-ink">
-                    {aiResult.suggestion.title}
-                  </Text>
-                  <Text className="mt-2 text-sm leading-6 text-muted">
-                    {aiResult.suggestion.description}
-                  </Text>
-                  <Text className="mt-3 text-sm font-bold text-pine">
-                    {humanize(aiResult.suggestion.category)} ·{" "}
-                    {aiResult.suggestion.helpTypes.map(humanize).join(", ")}
-                  </Text>
-                  <View className="mt-4 gap-2">
-                    {aiResult.suggestion.needItems.map((item, index) => (
-                      <Text
-                        className="text-sm leading-6 text-ink"
-                        key={`${item.name}-${index}`}
-                      >
-                        • {item.name} ({humanize(item.type)}):{" "}
-                        {item.description}
-                      </Text>
-                    ))}
-                  </View>
-                  {aiResult.suggestion.followUpQuestions.length ? (
-                    <View className="mt-4">
-                      <Text className="text-sm font-black text-ink">
-                        Questions to answer before saving
-                      </Text>
-                      {aiResult.suggestion.followUpQuestions.map(
-                        (question, index) => (
-                          <Text
-                            className="mt-1 text-sm leading-6 text-muted"
-                            key={`${question}-${index}`}
-                          >
-                            • {question}
-                          </Text>
-                        ),
-                      )}
-                    </View>
-                  ) : null}
-                  {aiResult.redactions.length ? (
-                    <Text className="mt-4 text-xs leading-5 text-muted">
-                      Removed before AI processing:{" "}
-                      {aiResult.redactions.join(", ")}.
-                    </Text>
-                  ) : null}
-                  <Text className="mt-3 text-xs leading-5 text-muted">
-                    {aiResult.disclaimer}
-                  </Text>
-                  <Pressable
-                    accessibilityRole="button"
-                    className="mt-4 min-h-14 items-center justify-center rounded-2xl bg-leaf px-5"
-                    onPress={applyAiSuggestion}
+                  <View
+                    className={`mr-3 h-6 w-6 items-center justify-center rounded-md border ${
+                      aiConsent ? "border-pine bg-pine" : "border-line bg-white"
+                    }`}
                   >
                     <Text className="font-black text-white">
-                      Use these suggestions
+                      {aiConsent ? "✓" : ""}
                     </Text>
-                  </Pressable>
-                </View>
-              ) : null}
-            </View>
+                  </View>
+                  <Text className="flex-1 text-sm leading-6 text-ink">
+                    I consent to sending the sanitized text to the configured AI
+                    provider for this one suggestion.
+                  </Text>
+                </Pressable>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityState={{
+                    disabled:
+                      aiBusy || !aiConsent || aiDescription.trim().length < 20,
+                  }}
+                  className={`mt-4 min-h-14 items-center justify-center rounded-2xl px-5 ${
+                    aiBusy || !aiConsent || aiDescription.trim().length < 20
+                      ? "bg-line"
+                      : "bg-pine"
+                  }`}
+                  disabled={
+                    aiBusy || !aiConsent || aiDescription.trim().length < 20
+                  }
+                  onPress={generateAiSuggestion}
+                >
+                  {aiBusy ? (
+                    <ActivityIndicator color="#FFFFFF" />
+                  ) : (
+                    <Text className="font-black text-white">
+                      Generate suggestion
+                    </Text>
+                  )}
+                </Pressable>
+                {aiNotice ? (
+                  <Text className="mt-4 text-sm leading-6 text-muted">
+                    {aiNotice}
+                  </Text>
+                ) : null}
+                {aiResult ? (
+                  <View className="mt-5 rounded-2xl border border-leaf bg-white p-5">
+                    <Text className="text-xs font-bold uppercase tracking-widest text-leaf">
+                      Preview only · not saved
+                    </Text>
+                    <Text className="mt-2 text-xl font-black text-ink">
+                      {aiResult.suggestion.title}
+                    </Text>
+                    <Text className="mt-2 text-sm leading-6 text-muted">
+                      {aiResult.suggestion.description}
+                    </Text>
+                    <Text className="mt-3 text-sm font-bold text-pine">
+                      {humanize(aiResult.suggestion.category)} ·{" "}
+                      {aiResult.suggestion.helpTypes.map(humanize).join(", ")}
+                    </Text>
+                    <View className="mt-4 gap-2">
+                      {aiResult.suggestion.needItems.map((item, index) => (
+                        <Text
+                          className="text-sm leading-6 text-ink"
+                          key={`${item.name}-${index}`}
+                        >
+                          • {item.name} ({humanize(item.type)}):{" "}
+                          {item.description}
+                        </Text>
+                      ))}
+                    </View>
+                    {aiResult.suggestion.followUpQuestions.length ? (
+                      <View className="mt-4">
+                        <Text className="text-sm font-black text-ink">
+                          Questions to answer before saving
+                        </Text>
+                        {aiResult.suggestion.followUpQuestions.map(
+                          (question, index) => (
+                            <Text
+                              className="mt-1 text-sm leading-6 text-muted"
+                              key={`${question}-${index}`}
+                            >
+                              • {question}
+                            </Text>
+                          ),
+                        )}
+                      </View>
+                    ) : null}
+                    {aiResult.redactions.length ? (
+                      <Text className="mt-4 text-xs leading-5 text-muted">
+                        Removed before AI processing:{" "}
+                        {aiResult.redactions.join(", ")}.
+                      </Text>
+                    ) : null}
+                    <Text className="mt-3 text-xs leading-5 text-muted">
+                      {aiResult.disclaimer}
+                    </Text>
+                    <Pressable
+                      accessibilityRole="button"
+                      className="mt-4 min-h-14 items-center justify-center rounded-2xl bg-leaf px-5"
+                      onPress={applyAiSuggestion}
+                    >
+                      <Text className="font-black text-white">
+                        Use these suggestions
+                      </Text>
+                    </Pressable>
+                  </View>
+                ) : null}
+              </View>
+            ) : (
+              <View className="mb-8 rounded-3xl border border-line bg-canvas p-5 md:p-6">
+                <Text className="text-xs font-bold uppercase tracking-widest text-leaf">
+                  Guided request form
+                </Text>
+                <Text className="mt-2 text-lg font-black text-ink">
+                  AI writing help is currently off
+                </Text>
+                <Text className="mt-2 text-sm leading-6 text-muted">
+                  Nothing is broken—you can complete every step below manually.
+                  The optional writing helper appears here only when an operator
+                  has enabled and reviewed it.
+                </Text>
+              </View>
+            )}
             <Text className="mb-6 text-xl font-black text-ink">
               1. The problem and finish line
             </Text>
@@ -521,7 +553,7 @@ export default function RequestEditorScreen() {
                   className="rounded-2xl border border-line bg-canvas p-5"
                   key={field.id}
                 >
-                  <View className="mb-4 flex-row items-center justify-between">
+                  <View className="mb-4 flex-row flex-wrap items-center justify-between gap-3">
                     <Text className="text-lg font-black text-ink">
                       Need {index + 1}
                     </Text>
@@ -677,6 +709,34 @@ export default function RequestEditorScreen() {
                 Public visitors will see the content below only after approval.
               </Text>
             </View>
+            <View className="mb-7 rounded-2xl border border-line bg-white p-5">
+              <Text className="text-lg font-black text-ink">
+                Ready for review?
+              </Text>
+              <Text className="mt-1 text-sm leading-6 text-muted">
+                You can save at any time. All five checks are required only when
+                you submit to moderators.
+              </Text>
+              <View className="mt-4 gap-2">
+                {submissionChecklist.map((item) => (
+                  <View className="flex-row items-start gap-3" key={item.key}>
+                    <Text
+                      accessibilityLabel={item.met ? "Complete" : "Incomplete"}
+                      className={`font-black ${item.met ? "text-leaf" : "text-coral"}`}
+                    >
+                      {item.met ? "✓" : "○"}
+                    </Text>
+                    <Text
+                      className={`flex-1 text-sm leading-6 ${
+                        item.met ? "text-ink" : "text-muted"
+                      }`}
+                    >
+                      {item.label}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
             <View className="mb-7 rounded-2xl bg-canvas p-5">
               <Text className="text-xs font-bold uppercase tracking-widest text-coral">
                 {humanize(watched.category)} · {humanize(watched.urgency)}
@@ -728,9 +788,13 @@ export default function RequestEditorScreen() {
             </PrimaryButton>
             <Pressable
               accessibilityRole="button"
-              accessibilityState={{ disabled: isSubmitting }}
-              className="mt-3 min-h-14 items-center justify-center rounded-2xl bg-leaf px-5"
-              disabled={isSubmitting}
+              accessibilityState={{
+                disabled: isSubmitting || !submissionReady,
+              }}
+              className={`mt-3 min-h-14 items-center justify-center rounded-2xl px-5 ${
+                submissionReady ? "bg-leaf" : "bg-muted"
+              }`}
+              disabled={isSubmitting || !submissionReady}
               onPress={saveAndSubmit}
             >
               <Text className="text-base font-black text-white">

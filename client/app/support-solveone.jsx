@@ -237,7 +237,7 @@ export default function SupportSolveOneScreen() {
                 className="rounded-2xl border border-line bg-white p-5"
                 key={item.id}
               >
-                <View className="flex-row items-center justify-between gap-3">
+                <View className="flex-row flex-wrap items-center justify-between gap-3">
                   <Text className="text-lg font-black text-ink">
                     {formatPesos(item.amountCentavos)}
                   </Text>

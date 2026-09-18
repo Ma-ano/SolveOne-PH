@@ -50,6 +50,30 @@ async function enabledFixture(provider, configOverrides = {}) {
 }
 
 describe("AI request-structuring API", () => {
+  it("reports availability without invoking the provider", async () => {
+    const provider = { structureRequest: async () => validSuggestion };
+    const { fixture, authorization } = await enabledFixture(provider);
+    const enabled = await request(fixture.app)
+      .get("/api/v1/ai/status")
+      .set("Authorization", authorization);
+    expect(enabled.status).toBe(200);
+    expect(enabled.headers["cache-control"]).toBe("private, no-store");
+    expect(enabled.body.data).toEqual({ available: true });
+
+    const disabledFixture = createAuthFixture();
+    await registerAndVerify(disabledFixture);
+    const session = await disabledFixture.authService.login({
+      email: validRegistration.email,
+      password: validRegistration.password,
+      deviceName: "Requester browser",
+      platform: "web",
+    });
+    const disabled = await request(disabledFixture.app)
+      .get("/api/v1/ai/status")
+      .set("Authorization", `Bearer ${session.accessToken}`);
+    expect(disabled.body.data).toEqual({ available: false });
+  });
+
   it("requires authentication, explicit consent, and a strict request body", async () => {
     const provider = { structureRequest: async () => validSuggestion };
     const { fixture, authorization } = await enabledFixture(provider);

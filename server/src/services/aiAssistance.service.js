@@ -30,6 +30,10 @@ export class AiAssistanceService {
     this.provider = provider;
   }
 
+  status() {
+    return Object.freeze({ available: this.config.aiAssistanceEnabled });
+  }
+
   async structureRequest(userId, input) {
     if (!this.config.aiAssistanceEnabled) {
       throw assistanceError(

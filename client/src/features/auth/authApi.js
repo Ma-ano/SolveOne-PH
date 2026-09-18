@@ -63,6 +63,13 @@ export const authApi = Object.freeze({
     });
   },
 
+  restoreSession() {
+    return apiRequest("/auth/session", {
+      method: "POST",
+      body: deviceContext(),
+    });
+  },
+
   logout({ accessToken, refreshToken }) {
     return apiRequest("/auth/logout", {
       method: "POST",

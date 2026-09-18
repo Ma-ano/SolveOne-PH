@@ -129,6 +129,50 @@ export function createAuthController(authService, config) {
       });
     },
 
+    async restoreSession(req, res) {
+      const input = req.validated.body;
+      const refreshToken = req.cookies[config.refreshCookieName];
+      res.set("Cache-Control", "private, no-store");
+
+      if (!refreshToken) {
+        res.status(200).json({ success: true, data: { session: null } });
+        return;
+      }
+
+      try {
+        const result = await authService.refresh(
+          refreshToken,
+          requestContext(req, {
+            deviceName: input.deviceName,
+            platform: input.platform,
+          }),
+        );
+        res.status(200).json({
+          success: true,
+          data: {
+            session: sendSession(
+              req,
+              res,
+              result,
+              input.platform,
+              config,
+              true,
+            ),
+          },
+        });
+      } catch (error) {
+        res.clearCookie(
+          config.refreshCookieName,
+          refreshCookieBaseOptions(config),
+        );
+        if ([400, 401, 403].includes(error?.statusCode)) {
+          res.status(200).json({ success: true, data: { session: null } });
+          return;
+        }
+        throw error;
+      }
+    },
+
     async logout(req, res) {
       const refreshToken =
         req.validated.body.refreshToken ||

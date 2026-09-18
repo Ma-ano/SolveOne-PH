@@ -1,9 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
-
-import { useAuth } from "../auth/AuthContext";
-import { notificationApi } from "../notifications/notificationApi";
 
 const labels = Object.freeze({
   money: "Money",
@@ -42,92 +38,9 @@ export function formatRequestDate(value) {
 }
 
 export function RequestNav({ action }) {
-  const { authenticatedRequest, status, user } = useAuth();
-  const unreadQuery = useQuery({
-    queryKey: ["notification-unread-count", user?.id],
-    queryFn: () => notificationApi.unreadCount(authenticatedRequest),
-    enabled: status === "authenticated",
-  });
-  const unreadCount = unreadQuery.data?.unreadCount ?? 0;
+  if (!action) return null;
   return (
-    <View className="mb-8 flex-row flex-wrap items-center justify-between gap-3 border-b border-line pb-5">
-      <Link href="/" asChild>
-        <Pressable accessibilityRole="link" className="min-h-12 justify-center">
-          <Text className="text-xl font-black tracking-tight text-pine">
-            SolveOne PH
-          </Text>
-        </Pressable>
-      </Link>
-      <View className="flex-row flex-wrap items-center gap-2">
-        <Link href="/requests" asChild>
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-12 justify-center rounded-xl px-3"
-          >
-            <Text className="text-sm font-bold text-leaf">Discover</Text>
-          </Pressable>
-        </Link>
-        <Link href="/discover" asChild>
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-12 justify-center rounded-xl px-3"
-          >
-            <Text className="text-sm font-bold text-leaf">Match</Text>
-          </Pressable>
-        </Link>
-        <Link href="/giveaway-items" asChild>
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-12 justify-center rounded-xl px-3"
-          >
-            <Text className="text-sm font-bold text-leaf">Free items</Text>
-          </Pressable>
-        </Link>
-        <Link href="/community-missions" asChild>
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-12 justify-center rounded-xl px-3"
-          >
-            <Text className="text-sm font-bold text-leaf">Missions</Text>
-          </Pressable>
-        </Link>
-        <Link href="/impact" asChild>
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-12 justify-center rounded-xl px-3"
-          >
-            <Text className="text-sm font-bold text-leaf">Impact</Text>
-          </Pressable>
-        </Link>
-        <Link
-          href={status === "authenticated" ? "/support-solveone" : "/login"}
-          asChild
-        >
-          <Pressable
-            accessibilityRole="link"
-            className="min-h-12 justify-center rounded-xl px-3"
-          >
-            <Text className="text-sm font-bold text-leaf">
-              Support SolveOne
-            </Text>
-          </Pressable>
-        </Link>
-        {status === "authenticated" ? (
-          <Link href="/notifications" asChild>
-            <Pressable
-              accessibilityRole="link"
-              accessibilityLabel={`Notifications, ${unreadCount} unread`}
-              className="min-h-12 justify-center rounded-xl px-3"
-            >
-              <Text className="text-sm font-bold text-leaf">
-                Notifications{unreadCount ? ` (${unreadCount})` : ""}
-              </Text>
-            </Pressable>
-          </Link>
-        ) : null}
-        {action}
-      </View>
-    </View>
+    <View className="mb-6 flex-row flex-wrap justify-end gap-2">{action}</View>
   );
 }
 
@@ -165,7 +78,7 @@ export function NeedItemList({ items = [], renderAction }) {
           className="rounded-2xl border border-line bg-white p-4"
           key={item.id ?? `${item.name}-${index}`}
         >
-          <View className="flex-row items-start justify-between gap-3">
+          <View className="flex-row flex-wrap items-start justify-between gap-3">
             <View className="flex-1">
               <Text className="font-black text-ink">
                 {item.name || "Unnamed need"}

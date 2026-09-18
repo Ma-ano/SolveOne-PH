@@ -131,6 +131,60 @@ export function requestFormToPayload(values) {
   };
 }
 
+export function requestSubmissionChecklist(values, now = new Date()) {
+  const needs = values.needItems ?? [];
+  const helpTypes = values.helpTypes ?? [];
+  const completeNeeds =
+    needs.length > 0 &&
+    needs.every((item) => {
+      const hasEstimate = ["money", "item"].includes(item.type)
+        ? Number(item.estimatedValuePesos) > 0
+        : true;
+      return (
+        item.name?.trim().length >= 3 &&
+        item.description?.trim().length >= 10 &&
+        helpTypes.includes(item.type) &&
+        hasEstimate
+      );
+    }) &&
+    helpTypes.every((type) => needs.some((item) => item.type === type));
+  const neededBy = values.neededBy
+    ? new Date(`${values.neededBy}T23:59:59.999Z`)
+    : null;
+
+  return [
+    {
+      key: "title",
+      label: "A specific title with at least 10 characters",
+      met: values.title?.trim().length >= 10,
+    },
+    {
+      key: "description",
+      label: "A problem and finish line with at least 50 characters",
+      met: values.description?.trim().length >= 50,
+    },
+    {
+      key: "help",
+      label: "At least one kind of help and a matching complete need item",
+      met: helpTypes.length > 0 && completeNeeds,
+    },
+    {
+      key: "location",
+      label: "City or municipality and province",
+      met: Boolean(values.city?.trim() && values.province?.trim()),
+    },
+    {
+      key: "date",
+      label: "A valid future needed-by date",
+      met: Boolean(
+        neededBy &&
+        !Number.isNaN(neededBy.getTime()) &&
+        neededBy.getTime() > now.getTime(),
+      ),
+    },
+  ];
+}
+
 export function requestToFormValues(request) {
   if (!request) {
     return { ...emptyRequestForm, helpTypes: [...emptyRequestForm.helpTypes] };

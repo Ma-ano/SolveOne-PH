@@ -1,18 +1,9 @@
-import { Link } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 export function ProfileNav({ action }) {
+  if (!action) return null;
   return (
-    <View className="mb-8 flex-row items-center justify-between border-b border-line pb-5">
-      <Link href="/" asChild>
-        <Pressable accessibilityRole="link" className="min-h-12 justify-center">
-          <Text className="text-xl font-black tracking-tight text-pine">
-            SolveOne PH
-          </Text>
-        </Pressable>
-      </Link>
-      {action}
-    </View>
+    <View className="mb-6 flex-row flex-wrap justify-end gap-2">{action}</View>
   );
 }
 

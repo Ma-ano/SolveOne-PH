@@ -33,7 +33,7 @@ export function ConversationCard({ conversation }) {
         accessibilityRole="link"
         className="rounded-3xl border border-line bg-surface p-5"
       >
-        <View className="flex-row items-start justify-between gap-3">
+        <View className="flex-row flex-wrap items-start justify-between gap-3">
           <View className="flex-1">
             <Text className="text-lg font-black text-ink">
               {conversation.otherParticipant?.displayName ?? "Help participant"}
